@@ -14,6 +14,9 @@ using System.Text.RegularExpressions;
 
 namespace ImageService.Controller.Handlers
 {
+    /// <summary>
+    /// Represents a directory handler.
+    /// </summary>
     public class DirectoyHandler : IDirectoryHandler
     {
         private IImageController m_controller;              // The Image Processing Controller
@@ -24,6 +27,11 @@ namespace ImageService.Controller.Handlers
 
         public event EventHandler<DirectoryCloseEventArgs> DirectoryClose; // The Event That Notifies that the Directory is being closed
 
+        /// <summary>
+        /// Constructor. Creates a directory handler instance. 
+        /// </summary>
+        /// <param name="m_controller">The controller.</param> 
+        /// <param name="m_logging">The logger.</param> 
         public DirectoyHandler(IImageController m_controller, ILoggingService m_logging)
         {
             this.m_controller = m_controller;
@@ -31,6 +39,10 @@ namespace ImageService.Controller.Handlers
            
         }
 
+        /// <summary>
+        /// Start handle a give directory.
+        /// </summary>
+        /// <param name="dirPath">The path of the directory to be handled.</param> 
         public void StartHandleDirectory(string dirPath) // The Function Recieves the directory to Handle
         {
             m_path = dirPath;
@@ -40,6 +52,11 @@ namespace ImageService.Controller.Handlers
             m_logging.Log("Started handling the directory in path: " + m_path, MessageTypeEnum.INFO);
         }
 
+        /// <summary>
+        /// Todo: complete remarks.
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="e"></param>
         private void OnCreated(object source, FileSystemEventArgs e)// new image recieved
         {
             string extension = Path.GetExtension(e.FullPath);
@@ -62,6 +79,11 @@ namespace ImageService.Controller.Handlers
             }
         }
 
+        /// <summary>
+        /// This method is called when command is recieived.
+        /// </summary>
+        /// <param name="sender">The command sender.</param> 
+        /// <param name="e">The command's arguments.</param> 
         public void OnCommandRecieved(object sender, CommandRecievedEventArgs e) // The Event that will be activated upon new Command
         {   //checking if our path is the one the server intended to handle the command
             if (e.RequestDirPath.Equals(m_path) || e.RequestDirPath.Equals("*"))// Equals compares content
@@ -90,6 +112,11 @@ namespace ImageService.Controller.Handlers
             }
         }
 
+        /// <summary>
+        /// Todo: complete remarks.
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns></returns>
         private bool WaitForFullFile(FileInfo file)
         {
             const int timeMax = 20000;
@@ -106,6 +133,11 @@ namespace ImageService.Controller.Handlers
             return true;
         }
 
+        /// <summary>
+        /// Todo: complete remarks.
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns></returns>
         private bool IsFileLocked(FileInfo file)
         {
             FileStream stream = null;

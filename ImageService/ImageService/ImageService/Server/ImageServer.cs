@@ -11,6 +11,9 @@ using System.Threading.Tasks;
 
 namespace ImageService.Server
 {
+    /// <summary>
+    /// Represents an image server.
+    /// </summary>
     public class ImageServer
     {    
         private IImageController m_controller;
@@ -19,6 +22,12 @@ namespace ImageService.Server
         
         public event EventHandler<CommandRecievedEventArgs> CommandRecieved; // The event that notifies about a new Command being recieved
 
+        /// <summary>
+        /// Constructor. creates a new image server instance.
+        /// </summary>
+        /// <param name="imageController">The image controller.</param> 
+        /// <param name="loggingService">The logging service.</param> 
+        /// <param name="handler">The paths to be handled separated by semicolons.</param>  
         public ImageServer(IImageController imageController, ILoggingService loggingService, string handler)
         {
             m_controller = imageController;
@@ -32,6 +41,10 @@ namespace ImageService.Server
             }
         }
         
+        /// <summary>
+        /// Creates a new directory handler for the directory of the given path.
+        /// </summary>
+        /// <param name="path">The path of the directory to be handled.</param> 
         private void CreateDirectoryHandler(string path)
         {
             IDirectoryHandler directoryHandler = new DirectoyHandler(m_controller, m_logging);
@@ -40,7 +53,12 @@ namespace ImageService.Server
             directoryHandler.DirectoryClose += this.OnDirectoryClose;
             directoryHandler.StartHandleDirectory(path);
         }
-
+        
+        /// <summary>
+        /// This method is called when a directory is closing.
+        /// </summary>
+        /// <param name="sender">The command sender.</param> 
+        /// <param name="args">The directory close event arguments.</param> 
         private void OnDirectoryClose(object sender, DirectoryCloseEventArgs args)
         {
             if (sender is IDirectoryHandler)
@@ -51,6 +69,9 @@ namespace ImageService.Server
             }
         }
 
+        /// <summary>
+        /// Close the server.
+        /// </summary>
         public void CloseServer()
         {
             string[] args = { };

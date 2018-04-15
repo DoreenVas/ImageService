@@ -10,11 +10,18 @@ using System.Threading.Tasks;
 
 namespace ImageService.Controller
 {
+    /// <summary>
+    /// Represents an image controller.
+    /// </summary>
     public class ImageController : IImageController
     {
         private IImageServiceModal m_modal;                      // The Modal Object
         private Dictionary<int, ICommand> commands;
 
+        /// <summary>
+        /// Constructor. Creates a new image controller.
+        /// </summary>
+        /// <param name="modal">The image service modal.</param> 
         public ImageController(IImageServiceModal modal)
         {
             m_modal = modal;                    // Storing the Modal Of The System
@@ -23,6 +30,13 @@ namespace ImageService.Controller
             commands[(int)CommandEnum.NewFileCommand] = new NewFileCommand(m_modal);     
         }
 
+        /// <summary>
+        /// Executes the given command.
+        /// </summary>
+        /// <param name="commandID">The command's identification.</param> 
+        /// <param name="args">The command's arguments.</param> 
+        /// <param name="resultSuccesful">The command's result.</param> 
+        /// <returns>A string that outlines the command's assignment.</returns> 
         public string ExecuteCommand(int commandID, string[] args, out bool resultSuccesful)
         {
             Task <Tuple<string, bool>> command = new Task <Tuple<string, bool>>(() =>

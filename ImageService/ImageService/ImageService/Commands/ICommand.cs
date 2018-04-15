@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace ImageService.Commands
 {
+    /// <summary>
+    /// Represents a command interface.
+    /// </summary>
     public interface ICommand
     {
         string Execute(string[] args, out bool result);          // The Function That will Execute The 

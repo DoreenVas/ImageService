@@ -12,19 +12,32 @@ using System.Threading.Tasks;
 
 namespace ImageService.Modal
 {
+    /// <summary>
+    /// Represents an image service modal.
+    /// </summary>
     public class ImageServiceModal : IImageServiceModal
     {
        
         private string m_OutputFolder;            // The Output Folder
         private int m_thumbnailSize;              // The Size Of The Thumbnail Size
 
+        /// <summary>
+        /// Constructor. Creates an image service modal instance.
+        /// </summary>
+        /// <param name="output">The output folder.</param> 
+        /// <param name="thumbnailSize">The thumbnail size.</param> 
         public ImageServiceModal(string output, int thumbnailSize)
         {
             m_OutputFolder = output;
             m_thumbnailSize = thumbnailSize;
         }
 
-
+        /// <summary>
+        /// Todo: complete remarks.
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="result"></param>
+        /// <returns></returns>
         public string AddFile(string path, out bool result)
         {
             try
@@ -109,6 +122,7 @@ namespace ImageService.Modal
             }
         }
 
+        // Todo: add remarks.
         private Tuple<string,int> ChangePicName(string finalPath, string outputFolder)
         {
             int count = 1;
