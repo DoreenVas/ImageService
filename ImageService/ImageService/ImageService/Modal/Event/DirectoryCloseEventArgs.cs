@@ -19,8 +19,8 @@ namespace ImageService.Modal
         /// <summary>
         /// Constructor. creates a directory close event arguments instance.
         /// </summary>
-        /// <param name="dirPath"></param> The path of the directory to close.
-        /// <param name="message"></param> The logger's message.
+        /// <param name="dirPath"> The path of the directory to close.</param>
+        /// <param name="message"> The logger's message.</param>
         public DirectoryCloseEventArgs(string dirPath, string message)
         {
             DirectoryPath = dirPath;                    // Setting the Directory Name

@@ -31,12 +31,12 @@ namespace ImageService.Controller
         }
 
         /// <summary>
-        /// Executes the given command.
+        /// Executes the given command in his own task.
         /// </summary>
         /// <param name="commandID">The command's identification.</param> 
         /// <param name="args">The command's arguments.</param> 
         /// <param name="resultSuccesful">The command's result.</param> 
-        /// <returns>A string that outlines the command's assignment.</returns> 
+        /// <returns>A string with information about the success/failure of the assignment.</returns> 
         public string ExecuteCommand(int commandID, string[] args, out bool resultSuccesful)
         {
             Task <Tuple<string, bool>> command = new Task <Tuple<string, bool>>(() =>

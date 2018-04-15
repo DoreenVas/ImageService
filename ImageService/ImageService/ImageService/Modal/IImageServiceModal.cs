@@ -12,9 +12,9 @@ namespace ImageService.Modal
     public interface IImageServiceModal
     {
         /// <summary>
-        /// Addes A file to the system.
+        /// Adds A file to the system.
         /// </summary>
-        /// <param name="path">The Path of the Image from the file.</param>
+        /// <param name="path">The Path of the Image to be added.</param>
         /// <returns>Indication if the Addition Was Successful.</returns>
         string AddFile(string path, out bool result);
     }

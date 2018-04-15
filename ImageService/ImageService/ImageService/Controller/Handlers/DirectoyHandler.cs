@@ -40,7 +40,7 @@ namespace ImageService.Controller.Handlers
         }
 
         /// <summary>
-        /// Start handle a give directory.
+        /// Start handle a given directory.
         /// </summary>
         /// <param name="dirPath">The path of the directory to be handled.</param> 
         public void StartHandleDirectory(string dirPath) // The Function Recieves the directory to Handle
@@ -53,11 +53,11 @@ namespace ImageService.Controller.Handlers
         }
 
         /// <summary>
-        /// Todo: complete remarks.
+        /// the event handler for the event of something new created in the directory - new image recieved
         /// </summary>
         /// <param name="source"></param>
         /// <param name="e"></param>
-        private void OnCreated(object source, FileSystemEventArgs e)// new image recieved
+        private void OnCreated(object source, FileSystemEventArgs e)
         {
             string extension = Path.GetExtension(e.FullPath);
             if (filters.Contains(extension))
@@ -80,7 +80,7 @@ namespace ImageService.Controller.Handlers
         }
 
         /// <summary>
-        /// This method is called when command is recieived.
+        /// This method is called when command is received.
         /// </summary>
         /// <param name="sender">The command sender.</param> 
         /// <param name="e">The command's arguments.</param> 
@@ -113,10 +113,10 @@ namespace ImageService.Controller.Handlers
         }
 
         /// <summary>
-        /// Todo: complete remarks.
+        /// uses the function IsFileLocked and waits until the result is false, it also has a timeout to prevent an endless loop
         /// </summary>
-        /// <param name="file"></param>
-        /// <returns></returns>
+        /// <param name="file">the file to check existence for</param>
+        /// <returns>true if succeeded false otherwise</returns>
         private bool WaitForFullFile(FileInfo file)
         {
             const int timeMax = 20000;
@@ -134,10 +134,10 @@ namespace ImageService.Controller.Handlers
         }
 
         /// <summary>
-        /// Todo: complete remarks.
+        /// checks if the file received is locked for some reason 
         /// </summary>
-        /// <param name="file"></param>
-        /// <returns></returns>
+        /// <param name="file">the file to check</param>
+        /// <returns>true if locked false if not</returns>
         private bool IsFileLocked(FileInfo file)
         {
             FileStream stream = null;

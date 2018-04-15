@@ -70,7 +70,7 @@ namespace ImageService.Server
         }
 
         /// <summary>
-        /// Close the server.
+        /// Close the server.invoke the command of it closing.
         /// </summary>
         public void CloseServer()
         {

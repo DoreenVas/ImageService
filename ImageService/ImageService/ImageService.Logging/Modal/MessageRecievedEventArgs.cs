@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace ImageService.Logging.Modal
 {
+    /// <summary>
+    /// MessageRecievedEventArgs class includes status and message
+    /// </summary>
     public class MessageRecievedEventArgs : EventArgs
     {
         public MessageTypeEnum Status { get; set; }

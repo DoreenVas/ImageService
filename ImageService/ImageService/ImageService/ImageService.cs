@@ -17,7 +17,10 @@ using System.Configuration;
 using ImageService.Infrastructure;
 
 namespace ImageService
-{
+{   
+    /// <summary>
+    /// the ImageService class
+    /// </summary>
     public partial class ImageService : ServiceBase
     {
 
@@ -53,6 +56,10 @@ namespace ImageService
             public int dwWaitHint;
         };
 
+        /// <summary>
+        /// getting the settings from the app config and Initializing the service
+        /// </summary>
+        /// <param name="args">arguments</param>
         public ImageService(string[] args)
         {
             InitializeComponent();
@@ -77,6 +84,10 @@ namespace ImageService
             m_imageServer = new ImageServer(controller, logging, handler);
         }
 
+        /// <summary>
+        /// the function starts when the service starts
+        /// </summary>
+        /// <param name="args">arguments</param>
         protected override void OnStart(string[] args)
         {
 
@@ -96,6 +107,9 @@ namespace ImageService
             SetServiceStatus(this.ServiceHandle, ref serviceStatus);
         }
 
+        /// <summary>
+        /// the function starts when the service stops, tells the server to close
+        /// </summary>
         protected override void OnStop()
         {
 
@@ -104,6 +118,11 @@ namespace ImageService
             eventLog1.WriteEntry("In onStop.");
         }
 
+        /// <summary>
+        /// monitoring the system
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
         public void OnTimer(object sender, System.Timers.ElapsedEventArgs args)
         {
             eventLog1.WriteEntry("Monitoring the System", EventLogEntryType.Information, eventId++);
@@ -114,11 +133,21 @@ namespace ImageService
             eventLog1.WriteEntry("In OnContinue.");
         }
 
+        /// <summary>
+        /// writes the messages received to the log
+        /// </summary>
+        /// <param name="sender">the sender </param>
+        /// <param name="e">the arguments</param>
         private void OnMsg(object sender, MessageRecievedEventArgs e)
         {
             eventLog1.WriteEntry(e.Message, GetType(e.Status));
         }
 
+        /// <summary>
+        /// getting the type according to the status
+        /// </summary>
+        /// <param name="status"></param>
+        /// <returns>the type</returns>
         private EventLogEntryType GetType(MessageTypeEnum status)
         {
             switch (status)

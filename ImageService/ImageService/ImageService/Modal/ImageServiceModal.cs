@@ -33,10 +33,13 @@ namespace ImageService.Modal
         }
 
         /// <summary>
-        /// Todo: complete remarks.
+        /// adds the file to the output directory in the year and month of the date the picture was taken.
+        /// also creates a thumbnail in the thumbnails directory in the same year and month.
+        /// if the picture doesn't have a taken date we work on creation date.
+        /// if a picture in the same name exist in the output directory we add a number and check again.
         /// </summary>
-        /// <param name="path"></param>
-        /// <param name="result"></param>
+        /// <param name="path">the path of the picture to be added</param>
+        /// <param name="result">success or fail with a message</param>
         /// <returns></returns>
         public string AddFile(string path, out bool result)
         {
@@ -101,8 +104,11 @@ namespace ImageService.Modal
         }
 
         private static Regex r = new Regex(":");
-
-        //retrieves the datetime WITHOUT loading the whole image
+        /// <summary>
+        /// retrieves the datetime of the time taken ,or the creation time if it can't, WITHOUT loading the whole image
+        /// </summary>
+        /// <param name="path">the path of the picture</param>
+        /// <returns>the date time</returns>
         public static DateTime GetDateTakenFromImage(string path)
         {
             try
@@ -122,7 +128,12 @@ namespace ImageService.Modal
             }
         }
 
-        // Todo: add remarks.
+        /// <summary>
+        /// finds an available path for the picture by adding a number to its name
+        /// </summary>
+        /// <param name="finalPath">the path of the picture</param>
+        /// <param name="outputFolder">the output folder</param>
+        /// <returns>a tuple of the new final path and the number to be used for the thumbnail as well</returns>
         private Tuple<string,int> ChangePicName(string finalPath, string outputFolder)
         {
             int count = 1;
