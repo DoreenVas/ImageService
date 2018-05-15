@@ -28,7 +28,7 @@
             <TextBlock Padding="8" FontWeight="DemiBold" Grid.Row="3">Thumbnail Size:</TextBlock>
             <TextBlock x:Name="thumbnail_size" Text="{Binding VM_ThumbnailSize}" Padding="8" Grid.Row="3" Grid.Column="1" />
         </Grid>
-        <Button x:Name="remove_btn" Padding="10" FontWeight="Bold" FontSize="20">Remove</Button>
-        <ListBox x:Name="handlers" ItemsSource="{Binding VM_Handlers}" SelectedItem="{Binding Selected_Handler}" />
+        <Button x:Name="remove_btn" Command="{Binding RemoveCommand}" Padding="10" FontWeight="Bold" FontSize="20">Remove</Button>
+        <ListBox x:Name="handlers" ItemsSource="{Binding VM_Handlers}" SelectedItem="{Binding SelectedHandler}"  />
     </StackPanel>
 </UserControl>

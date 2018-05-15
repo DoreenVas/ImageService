@@ -59,7 +59,9 @@
     <Compile Include="DelegateCommand\DelegateCommand.cs" />
     <Compile Include="DelegateCommand\DelegateCommandBase.cs" />
     <Compile Include="DelegateCommand\WeakEventHandlerManager.cs" />
+    <Compile Include="Models\ILogModel.cs" />
     <Compile Include="Models\ISettingsModel.cs" />
+    <Compile Include="Models\LogModel.cs" />
     <Compile Include="Models\SettingsModel.cs" />
     <Compile Include="ViewModels\LogsViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
@@ -116,6 +118,8 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

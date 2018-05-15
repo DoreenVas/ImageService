@@ -6,12 +6,16 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using Microsoft.Practices.Prism.Commands;
 
 namespace ImageServiceGUI.ViewModels
 {
     class SettingsViewModel :INotifyPropertyChanged
     {
         private ISettingsModel settingsModel;
+        public ICommand RemoveCommand { get; private set; }
+        
         public SettingsViewModel()
         {
             settingsModel =new SettingsModel();
@@ -19,6 +23,8 @@ namespace ImageServiceGUI.ViewModels
               {
                   NotifyPropertyChanged("VM_" + e.PropertyName);
               };
+
+            RemoveCommand = new DelegateCommand<object>(OnRemove, CanRemove);
         }
         public event PropertyChangedEventHandler PropertyChanged;
         public void NotifyPropertyChanged(string propName)
@@ -51,5 +57,32 @@ namespace ImageServiceGUI.ViewModels
         {
             get { return settingsModel.Handlers; }
         }
+
+        private string selectedHandler;
+        public string SelectedHandler
+        {
+            get { return selectedHandler; }
+            set
+            {
+                selectedHandler = value;
+                if(RemoveCommand as DelegateCommand<object> !=null)
+                    (RemoveCommand as DelegateCommand<object>).RaiseCanExecuteChanged();
+            }
+        }
+        
+        private bool CanRemove(object obj)
+        {
+            if (SelectedHandler != null)
+                return true;
+            else
+                return false;
+        }
+
+
+        private void OnRemove(object obj)
+        {
+            //SelectedHandler = null;
+        }
+        
     }
 }

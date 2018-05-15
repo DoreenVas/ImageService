@@ -27,7 +27,7 @@ namespace ImageServiceGUI.Views
         {
             InitializeComponent();
             logsViewModel = new LogsViewModel();
-            this.DataContext = logsViewModel;
+            DataContext = logsViewModel;
         }
     }
 }
