@@ -15,6 +15,7 @@ using ImageService.Logging;
 using ImageService.Logging.Modal;
 using System.Configuration;
 using ImageService.Infrastructure;
+using ImageService.Communication.Server;
 
 namespace ImageService
 {   
@@ -24,10 +25,11 @@ namespace ImageService
     public partial class ImageService : ServiceBase
     {
 
-        private ImageServer m_imageServer;          // The Image Server
+        private ImageServer imageServer;          // The Image Server
         private IImageServiceModal modal;
         private IImageController controller;
         private ILoggingService logging;
+        private IServerCommunicationChannel serverChannel;
 
         [DllImport("advapi32.dll", SetLastError = true)]
         private static extern bool SetServiceStatus(IntPtr handle, ref ServiceStatus serviceStatus);
@@ -81,7 +83,8 @@ namespace ImageService
             logging.MessageRecieved += OnMsg;
             modal = new ImageServiceModal(outputDir, int.Parse(thumbnailSize));
             controller = new ImageController(modal);
-            m_imageServer = new ImageServer(controller, logging, handler);
+            imageServer = new ImageServer(controller, logging, handler);
+            serverChannel = new TcpServerChannel(8000, imageServer);
         }
 
         /// <summary>
@@ -105,6 +108,7 @@ namespace ImageService
             // Update the service state to Running.
             serviceStatus.dwCurrentState = ServiceState.SERVICE_RUNNING;
             SetServiceStatus(this.ServiceHandle, ref serviceStatus);
+            serverChannel.Start();
         }
 
         /// <summary>
@@ -113,8 +117,9 @@ namespace ImageService
         protected override void OnStop()
         {
 
-            m_imageServer.CloseServer();
+            imageServer.CloseServer();
             logging.MessageRecieved -= OnMsg;
+            serverChannel.Stop();
             eventLog1.WriteEntry("In onStop.");
         }
 

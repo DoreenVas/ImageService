@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageService.Infrastructure
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageService.Logging", "ImageService.Logging\ImageService.Logging.csproj", "{3E95BC18-4990-40B7-9B1B-E216F3CCAE0F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageService.Communication", "ImageService.Communication\ImageService.Communication.csproj", "{C4E45138-9562-4991-81D0-579E657AC32F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{3E95BC18-4990-40B7-9B1B-E216F3CCAE0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3E95BC18-4990-40B7-9B1B-E216F3CCAE0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3E95BC18-4990-40B7-9B1B-E216F3CCAE0F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4E45138-9562-4991-81D0-579E657AC32F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4E45138-9562-4991-81D0-579E657AC32F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4E45138-9562-4991-81D0-579E657AC32F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4E45138-9562-4991-81D0-579E657AC32F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

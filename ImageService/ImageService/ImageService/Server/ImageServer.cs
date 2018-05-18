@@ -1,12 +1,18 @@
-﻿using ImageService.Controller;
+﻿using ImageService.Communication.Server;
+using ImageService.Controller;
 using ImageService.Controller.Handlers;
+using ImageService.Infrastructure;
 using ImageService.Infrastructure.Enums;
 using ImageService.Logging;
 using ImageService.Modal;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ImageService.Server
@@ -14,12 +20,18 @@ namespace ImageService.Server
     /// <summary>
     /// Represents an image server.
     /// </summary>
-    public class ImageServer
+    public class ImageServer : IClientHandler
     {    
         private IImageController m_controller;
         private ILoggingService m_logging;
         private string m_handler;
-        
+
+        //Todo: needed for more functions (beside handleclient)?
+        private NetworkStream stream;
+        private BinaryReader reader;
+        private BinaryWriter writer;
+        private Mutex mutexLock = new Mutex();
+
         public event EventHandler<CommandRecievedEventArgs> CommandRecieved; // The event that notifies about a new Command being recieved
 
         /// <summary>
@@ -78,6 +90,46 @@ namespace ImageService.Server
             CommandRecievedEventArgs e = new CommandRecievedEventArgs((int)CommandEnum.CloseCommand, args, "*");
             CommandRecieved?.Invoke(this, e);
             m_logging.Log("Server is Closing ", Logging.Modal.MessageTypeEnum.INFO);
+        }
+
+        public void HandleClient(TcpClient client, List<TcpClient> clients)
+        {
+            new Task(() =>
+            {
+                try
+                {
+                    stream = client.GetStream();
+                    reader = new BinaryReader(stream);
+                    writer = new BinaryWriter(stream);
+
+                    while (client.Connected)
+                    {
+                        // todo: maybe add try catch block: starts here
+                        string commandLine = reader.ReadString();
+                        // todo: maybe add try catch block: ends here
+                        //m_loggingService.Log(this.ToString() + " got the command " + commandLine + ".", Logging.Modal.MessageTypeEnum.INFO); // todo: change messagetypeenum.
+                        CommandRecievedEventArgs commandRecievedEventArgs = JsonConvert.DeserializeObject<CommandRecievedEventArgs>(commandLine);
+                        if (commandRecievedEventArgs.CommandID == (int)CommandEnum.CloseCommand)
+                        {
+                            clients.Remove(client);
+                            client.Close();
+                            // todo: maybe add break here.
+                        }
+                        //Console.WriteLine("Got command: {0}", commandLine); 
+                        bool result;
+                        //string commandStr = m_imageController.ExecuteCommand((int)commandRecievedEventArgs.CommandID, commandRecievedEventArgs.Args, out result);
+                        mutexLock.WaitOne();
+                        //m_writer.Write(commandStr);
+                        mutexLock.ReleaseMutex();
+                    }
+                }
+                catch (Exception exception)
+                {
+                    clients.Remove(client);
+                    client.Close(); // todo: should it be here?
+                    //m_loggingService.Log(exception.ToString(), Logging.Modal.MessageTypeEnum.FAIL); // change message type enum
+                }
+            }).Start();
         }
     }
 }
