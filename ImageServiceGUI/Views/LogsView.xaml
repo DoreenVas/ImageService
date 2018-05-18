@@ -3,14 +3,28 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:ImageServiceGUI.Views"
+             xmlns:local="clr-namespace:ImageServiceGUI.ViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    
+    <UserControl.Resources>
+        <local:ColorConverter x:Key="ColorConverter"/>
+    </UserControl.Resources>
+
     <StackPanel Orientation="Vertical">
         <TextBlock TextWrapping="Wrap" Text="Logs" TextAlignment="Center" Background="LightSteelBlue" FontSize="40" FontWeight="Bold" Foreground="DarkBlue"/>
-
-        <Grid>
-            
-        </Grid>
+        <DataGrid  ItemsSource="{Binding VM_Logs}" IsReadOnly="True" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" 
+                   CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserSortColumns="False" ScrollViewer.CanContentScroll="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Type" Width="auto"  Binding="{Binding Status}" >
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Background" Value="{Binding Path=Status,Converter={StaticResource ColorConverter}}"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn  Header="Message" Width="*" Binding="{Binding Message}"></DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
     </StackPanel>
 </UserControl>

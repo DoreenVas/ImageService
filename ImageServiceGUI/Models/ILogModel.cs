@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ImageService.Logging.Modal;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -10,6 +11,6 @@ namespace ImageServiceGUI.Models
 {
     interface ILogModel : INotifyPropertyChanged
     {
-        ObservableCollection<string> Logs { get; set; }
+        ObservableCollection<MessageRecievedEventArgs> Logs { get; set; }
     }
 }

@@ -50,17 +50,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ImageService\ImageService.Infrastructure\Enums\CommandEnum.cs" />
     <Compile Include="ImageService\ImageService\ImageService.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="ImageService\ImageService\ImageService.Designer.cs">
       <DependentUpon>ImageService.cs</DependentUpon>
     </Compile>
-    <Compile Include="ImageService\ImageService.Logging\ILoggingService.cs" />
-    <Compile Include="ImageService\ImageService.Logging\LoggingService.cs" />
-    <Compile Include="ImageService\ImageService.Logging\Modal\MessageRecievedEventArgs.cs" />
-    <Compile Include="ImageService\ImageService.Logging\Modal\MessageTypeEnum.cs" />
     <Compile Include="ImageService\ImageService\Commands\ICommand.cs" />
     <Compile Include="ImageService\ImageService\Commands\NewFileCommand.cs" />
     <Compile Include="ImageService\ImageService\Controller\Handlers\DirectoyHandler.cs" />
@@ -91,6 +86,16 @@
     <EmbeddedResource Include="ImageService\ImageService\ProjectInstaller.resx">
       <DependentUpon>ProjectInstaller.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ImageService.Infrastructure\ImageService.Infrastructure.csproj">
+      <Project>{2c4f7489-7ed4-4cbd-b994-63c01cb56467}</Project>
+      <Name>ImageService.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ImageService.Logging\ImageService.Logging.csproj">
+      <Project>{3e95bc18-4990-40b7-9b1b-e216f3ccae0f}</Project>
+      <Name>ImageService.Logging</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

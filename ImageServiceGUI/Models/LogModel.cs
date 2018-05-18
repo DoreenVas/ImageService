@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ImageService.Logging.Modal;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -19,10 +20,25 @@ namespace ImageServiceGUI.Models
 
         public LogModel()
         {
-
+            Logs = new ObservableCollection<MessageRecievedEventArgs>();
+            MessageRecievedEventArgs a = new MessageRecievedEventArgs() { Status = MessageTypeEnum.WARNING, Message="IWIIIII" };
+            Logs.Add(a);
+            MessageRecievedEventArgs b = new MessageRecievedEventArgs() { Status = MessageTypeEnum.INFO, Message = "OMIIIIII" };
+            Logs.Add(b);
+            MessageRecievedEventArgs c = new MessageRecievedEventArgs() { Status = MessageTypeEnum.FAIL, Message = "yayaaasss" };
+            Logs.Add(c);
+            
         }
 
-        public ObservableCollection<string> Logs { get; set; }
+        private ObservableCollection<MessageRecievedEventArgs> logs;
+        public ObservableCollection<MessageRecievedEventArgs> Logs {
+            get { return logs; }
+            set
+            {
+                logs = value;
+                NotifyPropertyChanged("Logs");
+            }
+        }
        
     }
 }
