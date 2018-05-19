@@ -12,6 +12,9 @@ namespace ImageService.Communication.Client
     public interface IClientCommunicationChannel
     {
         event CommandRecievedFromServer ServerCommandRecieved;
-        void Send(CommandRecievedEventArgs commandRecievedEventArgs);
+        void SendCommand(CommandRecievedEventArgs commandRecievedEventArgs);
+        void RecieveCommand();
+        void CloseClient();
+        bool IsConnected { get; }
     }
 }

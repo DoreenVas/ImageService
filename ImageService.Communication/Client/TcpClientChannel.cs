@@ -1,4 +1,5 @@
 ﻿using ImageService.Infrastructure;
+using ImageService.Infrastructure.Enums;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -16,33 +17,45 @@ namespace ImageService.Communication.Client
     public class TcpClientChannel : IClientCommunicationChannel
     {
         private static TcpClientChannel instance;
-        private IPEndPoint ipEndPoint;
         private TcpClient client;
-        private IClientCommunicationChannel handler;
-        private bool connected;
+        private bool connected = false;
         private Mutex mutexLock = new Mutex();
+        public bool IsConnected { get; }
 
-        //public delegate void CommandRecievedFromServer(CommandRecievedEventArgs commandRead);
-        public event CommandRecievedFromServer ServerCommandRecieved;
+        public delegate void CommandRecievedFromServer(CommandRecievedEventArgs commandRead);
+        public event Client.CommandRecievedFromServer ServerCommandRecieved;
 
-        public TcpClientChannel() // todo private
+        public static TcpClientChannel Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new TcpClientChannel();
+                }
+                return instance;
+            }
+        }
+
+        private TcpClientChannel() 
+
         {
             if (!connected)
             {
                 Start();
+                IsConnected = connected;
             }
         }
 
-        private bool Start()
+        private void Start()
         {
             try
             {
 
                 client = new TcpClient();
-                IPEndPoint m_ipEndPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 8000);
-                client.Connect(m_ipEndPoint);
+                IPEndPoint ipEndPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 8000);
+                client.Connect(ipEndPoint);
                 Console.WriteLine("You are connected");
-                // todo: maybe send this to log
                 connected = true;
 
             }
@@ -51,10 +64,9 @@ namespace ImageService.Communication.Client
                 connected = false;
                 Console.WriteLine(exception.ToString());
             }
-            return connected;
         }
 
-        public void Send(CommandRecievedEventArgs commandRecievedEventArgs)
+        public void SendCommand(CommandRecievedEventArgs commandRecievedEventArgs)
         {
             new Task(() =>
             {
@@ -63,7 +75,7 @@ namespace ImageService.Communication.Client
                     NetworkStream stream = client.GetStream();
                     BinaryWriter writer = new BinaryWriter(stream);
                     string strJsonCmd = JsonConvert.SerializeObject(commandRecievedEventArgs);
-                    Console.WriteLine("Send to server:\n" + JsonConvert.SerializeObject(commandRecievedEventArgs, Newtonsoft.Json.Formatting.Indented)); //todo: check that it works.
+                    Console.WriteLine("Send to server:" + JsonConvert.SerializeObject(commandRecievedEventArgs, Newtonsoft.Json.Formatting.Indented)); 
                     mutexLock.WaitOne();
                     writer.Write(strJsonCmd);
                     // todo: maybe flush here ?
@@ -76,7 +88,7 @@ namespace ImageService.Communication.Client
             }).Start();
         }
 
-        public void Recieve()
+        public void RecieveCommand()
         {
             new Task(() =>
             {
@@ -90,8 +102,8 @@ namespace ImageService.Communication.Client
 
                         string commandRead = reader.ReadString();
                         Console.WriteLine("Recieved from server:\n" + commandRead);
-                        CommandRecievedEventArgs commandObj = JsonConvert.DeserializeObject<CommandRecievedEventArgs>(commandRead);
-                        ServerCommandRecieved?.Invoke(commandObj);
+                        CommandRecievedEventArgs command = JsonConvert.DeserializeObject<CommandRecievedEventArgs>(commandRead);
+                        ServerCommandRecieved?.Invoke(command);
                     }
                 }
                 catch (Exception exception)
@@ -101,9 +113,13 @@ namespace ImageService.Communication.Client
             }).Start();
         }
 
-        public void Close()
+        public void CloseClient()
         {
+            CommandRecievedEventArgs command = new CommandRecievedEventArgs((int)CommandEnum.ClientClosedCommand, null, "");
+            SendCommand(command);
             client.Close();
+            connected = false;
         }
+        
     }
 }

@@ -4,6 +4,7 @@ using ImageService.Controller.Handlers;
 using ImageService.Infrastructure;
 using ImageService.Infrastructure.Enums;
 using ImageService.Logging;
+using ImageService.Logging.Modal;
 using ImageService.Modal;
 using Newtonsoft.Json;
 using System;
@@ -26,10 +27,6 @@ namespace ImageService.Server
         private ILoggingService m_logging;
         private string m_handler;
 
-        //Todo: needed for more functions (beside handleclient)?
-        private NetworkStream stream;
-        private BinaryReader reader;
-        private BinaryWriter writer;
         private Mutex mutexLock = new Mutex();
 
         public event EventHandler<CommandRecievedEventArgs> CommandRecieved; // The event that notifies about a new Command being recieved
@@ -60,9 +57,9 @@ namespace ImageService.Server
         private void CreateDirectoryHandler(string path)
         {
             IDirectoryHandler directoryHandler = new DirectoyHandler(m_controller, m_logging);
-            m_logging.Log("A directory handler was created for the directory in path: " + path, Logging.Modal.MessageTypeEnum.INFO);
+            m_logging.Log("A directory handler was created for the directory in path: " + path, MessageTypeEnum.INFO);
             CommandRecieved += directoryHandler.OnCommandRecieved;
-            directoryHandler.DirectoryClose += this.OnDirectoryClose;
+            directoryHandler.DirectoryClose += OnDirectoryClose;
             directoryHandler.StartHandleDirectory(path);
         }
         
@@ -77,7 +74,7 @@ namespace ImageService.Server
             {
                 IDirectoryHandler directoryHandler = (IDirectoryHandler)sender;
                 CommandRecieved -= directoryHandler.OnCommandRecieved;
-                m_logging.Log(args.Message, Logging.Modal.MessageTypeEnum.INFO);
+                m_logging.Log(args.Message, MessageTypeEnum.INFO);
             }
         }
 
@@ -89,47 +86,49 @@ namespace ImageService.Server
             string[] args = { };
             CommandRecievedEventArgs e = new CommandRecievedEventArgs((int)CommandEnum.CloseCommand, args, "*");
             CommandRecieved?.Invoke(this, e);
-            m_logging.Log("Server is Closing ", Logging.Modal.MessageTypeEnum.INFO);
+            m_logging.Log("Server is Closing ", MessageTypeEnum.INFO);
         }
 
         public void HandleClient(TcpClient client, List<TcpClient> clients)
         {
-            new Task(() =>
-            {
-                try
+                new Task(() =>
                 {
-                    stream = client.GetStream();
-                    reader = new BinaryReader(stream);
-                    writer = new BinaryWriter(stream);
-
-                    while (client.Connected)
+                    try
                     {
-                        // todo: maybe add try catch block: starts here
-                        string commandLine = reader.ReadString();
-                        // todo: maybe add try catch block: ends here
-                        //m_loggingService.Log(this.ToString() + " got the command " + commandLine + ".", Logging.Modal.MessageTypeEnum.INFO); // todo: change messagetypeenum.
-                        CommandRecievedEventArgs commandRecievedEventArgs = JsonConvert.DeserializeObject<CommandRecievedEventArgs>(commandLine);
-                        if (commandRecievedEventArgs.CommandID == (int)CommandEnum.CloseCommand)
+                        NetworkStream stream = client.GetStream();
+                        BinaryReader reader = new BinaryReader(stream);
+                        BinaryWriter writer = new BinaryWriter(stream);
+
+                        while (true)
                         {
-                            clients.Remove(client);
-                            client.Close();
-                            // todo: maybe add break here.
+                            string commandLine = reader.ReadString();
+                            if (commandLine == null)
+                                continue;
+                            m_logging.Log("HandleClient got the command " + commandLine, MessageTypeEnum.INFO);
+                            CommandRecievedEventArgs commandRecievedEventArgs = JsonConvert.DeserializeObject<CommandRecievedEventArgs>(commandLine);
+                            if (commandRecievedEventArgs.CommandID == (int)CommandEnum.ClientClosedCommand)
+                            {
+                                clients.Remove(client);
+                                client.Close();
+                                m_logging.Log("A client was removed ", MessageTypeEnum.INFO);
+                                break;
+                            }
+                            bool result;
+                            string commandStr = m_controller.ExecuteCommand(commandRecievedEventArgs.CommandID, commandRecievedEventArgs.Args, out result);
+                            mutexLock.WaitOne();
+                            writer.Write(commandStr);
+                            mutexLock.ReleaseMutex();
                         }
-                        //Console.WriteLine("Got command: {0}", commandLine); 
-                        bool result;
-                        //string commandStr = m_imageController.ExecuteCommand((int)commandRecievedEventArgs.CommandID, commandRecievedEventArgs.Args, out result);
-                        mutexLock.WaitOne();
-                        //m_writer.Write(commandStr);
-                        mutexLock.ReleaseMutex();
                     }
-                }
-                catch (Exception exception)
-                {
-                    clients.Remove(client);
-                    client.Close(); // todo: should it be here?
-                    //m_loggingService.Log(exception.ToString(), Logging.Modal.MessageTypeEnum.FAIL); // change message type enum
-                }
-            }).Start();
+                    catch (Exception exc)
+                    {
+                        clients.Remove(client);
+                        client.Close();
+                        m_logging.Log(exc.ToString(), MessageTypeEnum.FAIL);
+                    }
+                }).Start();
+            
         }
     }
 }
+

@@ -12,6 +12,10 @@ namespace ImageService.Infrastructure.Enums
     public enum CommandEnum : int
     {
         NewFileCommand,
-        CloseCommand
+        CloseCommand, //can close one or all handlers (path or * accordingly)
+        GetConfigCommand,
+        LogCommand,
+        ClientClosedCommand
+        //NewLogEntryCommand ?
     }
 }
