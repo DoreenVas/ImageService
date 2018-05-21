@@ -14,8 +14,8 @@ namespace ImageService.Infrastructure.Enums
         NewFileCommand,
         CloseCommand, //can close one or all handlers (path or * accordingly)
         GetConfigCommand,
-        LogCommand,
-        ClientClosedCommand
-        //NewLogEntryCommand ?
+        LogCommand,//to get all the list so far
+        ClientClosedCommand,
+        NewLogCommand //a new log was recieved
     }
 }

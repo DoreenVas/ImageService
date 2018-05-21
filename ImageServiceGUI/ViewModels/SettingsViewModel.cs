@@ -49,7 +49,7 @@ namespace ImageServiceGUI.ViewModels
             get { return settingsModel.LogName; }
         }
 
-        public int VM_ThumbnailSize
+        public string VM_ThumbnailSize
         {
             get { return settingsModel.ThumbnailSize; }
         }

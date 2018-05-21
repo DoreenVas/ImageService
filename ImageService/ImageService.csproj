@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ImageService\ImageService\Commands\GetConfigCommand.cs" />
+    <Compile Include="ImageService\ImageService\Commands\LogCommand.cs" />
     <Compile Include="ImageService\ImageService\ImageService.cs">
       <SubType>Component</SubType>
     </Compile>

@@ -1,31 +1,51 @@
-﻿using System;
+﻿using ImageService.Communication.Client;
+using ImageService.Infrastructure;
+using ImageService.Infrastructure.Enums;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Data;
 
 namespace ImageServiceGUI.Models
 {
     class SettingsModel : ISettingsModel
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public void NotifyPropertyChanged(string propName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
-        }
-
+        public IClientCommunicationChannel Client { get; set; }
         public SettingsModel()
         {
-            OutputDir = "where to output dir";
-            SourceName = "where from source name";
-            LogName = "my log name";
-            ThumbnailSize = 120;
+            Client = TcpClientChannel.Instance;
+            Client.RecieveCommand();
+            Client.ServerCommandRecieved += ServerCommandRecieved;
             Handlers = new ObservableCollection<string>();
-            Handlers.Add("first one");
-            Handlers.Add("second one");
+            string[] arr = new string[5];
+            CommandRecievedEventArgs request = new CommandRecievedEventArgs((int)CommandEnum.GetConfigCommand, arr, "");
+            Client.SendCommand(request);
+        }
+
+        private void ServerCommandRecieved(CommandRecievedEventArgs commandRead)
+        {
+                if (commandRead != null && commandRead.CommandID == (int)CommandEnum.GetConfigCommand)
+                {
+                    OutputDir = commandRead.Args[0];
+                    SourceName = commandRead.Args[1];
+                    LogName = commandRead.Args[2];
+                    ThumbnailSize = commandRead.Args[3];
+                    //Object thisLock = new Object();
+                    //BindingOperations.EnableCollectionSynchronization(Handlers, thisLock);
+                    string[] handlers = commandRead.Args[4].Split(';');
+                    foreach (string handler in handlers)
+                    {
+                    App.Current.Dispatcher.Invoke((Action)delegate
+                    {
+                        Handlers.Add(handler);
+                    });
+                    }
+                }
+            
         }
 
         //the properties implementation
@@ -61,8 +81,8 @@ namespace ImageServiceGUI.Models
             }
         }
 
-        private int thumbnailSize;
-        public int ThumbnailSize
+        private string thumbnailSize;
+        public string ThumbnailSize
         {
             get { return thumbnailSize; }
             set
@@ -74,5 +94,11 @@ namespace ImageServiceGUI.Models
 
         public ObservableCollection<string> Handlers { get; set; }
 
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public void NotifyPropertyChanged(string propName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
+        }
     }
 }

@@ -13,7 +13,13 @@ namespace ImageService.Logging
     /// </summary>
     public class LoggingService : ILoggingService
     {
+        public LoggingService()
+        {
+            LogList = new List<MessageRecievedEventArgs>();
+        }
+
         public event EventHandler<MessageRecievedEventArgs> MessageRecieved;
+        public List<MessageRecievedEventArgs> LogList { get; }
 
         /// <summary>
         /// invokes the MessageRecieved event with the correct arguments 
@@ -25,6 +31,7 @@ namespace ImageService.Logging
             MessageRecievedEventArgs e = new MessageRecievedEventArgs();
             e.Message = message;
             e.Status = type;
+            LogList.Add(e);
             MessageRecieved?.Invoke(this, e);
         }
     }

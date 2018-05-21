@@ -16,10 +16,12 @@ using ImageService.Logging.Modal;
 using System.Configuration;
 using ImageService.Infrastructure;
 using ImageService.Communication.Server;
+using ImageService.Infrastructure.Enums;
+using Newtonsoft.Json;
 
 namespace ImageService
 {   
-    /// <summary>
+/// <summary>
     /// the ImageService class
     /// </summary>
     public partial class ImageService : ServiceBase
@@ -82,9 +84,11 @@ namespace ImageService
             logging = new LoggingService();
             logging.MessageRecieved += OnMsg;
             modal = new ImageServiceModal(outputDir, int.Parse(thumbnailSize));
-            controller = new ImageController(modal);
+            controller = new ImageController(modal,logging);
             imageServer = new ImageServer(controller, logging, handler);
             serverChannel = new TcpServerChannel(8000, logging, imageServer);
+            imageServer.NotifyClients += serverChannel.NotifyClients;
+
         }
 
         /// <summary>
@@ -93,7 +97,7 @@ namespace ImageService
         /// <param name="args">arguments</param>
         protected override void OnStart(string[] args)
         {
-            eventLog1.WriteEntry("In OnStart");
+            logging.Log("In OnStart",MessageTypeEnum.INFO);
             // Update the service state to Start Pending.  
             ServiceStatus serviceStatus = new ServiceStatus();
             serviceStatus.dwCurrentState = ServiceState.SERVICE_START_PENDING;
@@ -115,11 +119,11 @@ namespace ImageService
         /// </summary>
         protected override void OnStop()
         {
-
+            logging.Log("In onStop", MessageTypeEnum.INFO);
+            System.Threading.Thread.Sleep(1000);
             imageServer.CloseServer();
             logging.MessageRecieved -= OnMsg;
-            serverChannel.Stop();
-            eventLog1.WriteEntry("In onStop.");
+            serverChannel.Stop();  
         }
 
         /// <summary>
@@ -129,12 +133,13 @@ namespace ImageService
         /// <param name="args"></param>
         public void OnTimer(object sender, System.Timers.ElapsedEventArgs args)
         {
+            logging.Log("Monitoring the System", MessageTypeEnum.INFO);
             eventLog1.WriteEntry("Monitoring the System", EventLogEntryType.Information, eventId++);
         }
 
         protected override void OnContinue()
         {
-            eventLog1.WriteEntry("In OnContinue.");
+            logging.Log("In OnContinue.", MessageTypeEnum.INFO);
         }
 
         /// <summary>

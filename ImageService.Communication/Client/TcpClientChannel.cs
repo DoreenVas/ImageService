@@ -1,4 +1,4 @@
-﻿using ImageService.Infrastructure;
+﻿ using ImageService.Infrastructure;
 using ImageService.Infrastructure.Enums;
 using Newtonsoft.Json;
 using System;
@@ -20,7 +20,7 @@ namespace ImageService.Communication.Client
         private TcpClient client;
         private bool connected = false;
         private Mutex mutexLock = new Mutex();
-        public bool IsConnected { get; }
+        public bool IsConnected { get; private set; }
 
         public delegate void CommandRecievedFromServer(CommandRecievedEventArgs commandRead);
         public event Client.CommandRecievedFromServer ServerCommandRecieved;
@@ -55,14 +55,14 @@ namespace ImageService.Communication.Client
                 client = new TcpClient();
                 IPEndPoint ipEndPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 8000);
                 client.Connect(ipEndPoint);
-                Console.WriteLine("You are connected");
+                //Console.WriteLine("You are connected");
                 connected = true;
 
             }
             catch (Exception exception)
             {
                 connected = false;
-                Console.WriteLine(exception.ToString());
+                //Console.WriteLine(exception.ToString());
             }
         }
 
@@ -115,10 +115,10 @@ namespace ImageService.Communication.Client
 
         public void CloseClient()
         {
-            CommandRecievedEventArgs command = new CommandRecievedEventArgs((int)CommandEnum.ClientClosedCommand, null, "");
-            SendCommand(command);
-            client.Close();
             connected = false;
+            CommandRecievedEventArgs command = new CommandRecievedEventArgs((int)CommandEnum.ClientClosedCommand, null, "bla");
+            SendCommand(command);
+            //client.Close(); 
         }
         
     }

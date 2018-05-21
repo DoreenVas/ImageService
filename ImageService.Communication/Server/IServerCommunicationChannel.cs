@@ -9,7 +9,6 @@ namespace ImageService.Communication.Server
 {
     public interface IServerCommunicationChannel 
     {
-        //event EventHandler<CommandRecievedEventArgs> CommandRecievedEventArgs;
         void Start();
         void Stop();
         void NotifyClients(CommandRecievedEventArgs commandRecievedEventArgs);

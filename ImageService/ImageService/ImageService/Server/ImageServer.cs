@@ -18,6 +18,8 @@ using System.Threading.Tasks;
 
 namespace ImageService.Server
 {
+    public delegate void NotifyClients(CommandRecievedEventArgs command);
+
     /// <summary>
     /// Represents an image server.
     /// </summary>
@@ -30,6 +32,7 @@ namespace ImageService.Server
         private Mutex mutexLock = new Mutex();
 
         public event EventHandler<CommandRecievedEventArgs> CommandRecieved; // The event that notifies about a new Command being recieved
+        public event NotifyClients NotifyClients;
 
         /// <summary>
         /// Constructor. creates a new image server instance.
@@ -41,6 +44,7 @@ namespace ImageService.Server
         {
             m_controller = imageController;
             m_logging = loggingService;
+            m_logging.MessageRecieved += NewLogCommand;
             m_handler = handler;
 
             string[] paths = m_handler.Split(';');
@@ -49,7 +53,7 @@ namespace ImageService.Server
                 CreateDirectoryHandler(path);
             }
         }
-        
+
         /// <summary>
         /// Creates a new directory handler for the directory of the given path.
         /// </summary>
@@ -99,13 +103,13 @@ namespace ImageService.Server
                         BinaryReader reader = new BinaryReader(stream);
                         BinaryWriter writer = new BinaryWriter(stream);
 
-                        while (true)
+                        while (client.Connected)
                         {
-                            string commandLine = reader.ReadString();
-                            if (commandLine == null)
+                            string command = reader.ReadString();
+                            if (command == null)
                                 continue;
-                            m_logging.Log("HandleClient got the command " + commandLine, MessageTypeEnum.INFO);
-                            CommandRecievedEventArgs commandRecievedEventArgs = JsonConvert.DeserializeObject<CommandRecievedEventArgs>(commandLine);
+                            CommandRecievedEventArgs commandRecievedEventArgs = JsonConvert.DeserializeObject<CommandRecievedEventArgs>(command);
+                            m_logging.Log("HandleClient got the command: " + (CommandEnum)commandRecievedEventArgs.CommandID, MessageTypeEnum.INFO);
                             if (commandRecievedEventArgs.CommandID == (int)CommandEnum.ClientClosedCommand)
                             {
                                 clients.Remove(client);
@@ -113,10 +117,18 @@ namespace ImageService.Server
                                 m_logging.Log("A client was removed ", MessageTypeEnum.INFO);
                                 break;
                             }
-                            bool result;
-                            string commandStr = m_controller.ExecuteCommand(commandRecievedEventArgs.CommandID, commandRecievedEventArgs.Args, out result);
+                            bool success;
+                            string msg = m_controller.ExecuteCommand(commandRecievedEventArgs.CommandID, commandRecievedEventArgs.Args, out success);
+                            if (success)
+                            {
+                                m_logging.Log("Success executing command: "+ (CommandEnum)commandRecievedEventArgs.CommandID, MessageTypeEnum.INFO);
+                            }
+                            else
+                            {
+                                m_logging.Log(msg, MessageTypeEnum.FAIL);
+                            }
                             mutexLock.WaitOne();
-                            writer.Write(commandStr);
+                            writer.Write(msg);
                             mutexLock.ReleaseMutex();
                         }
                     }
@@ -127,8 +139,17 @@ namespace ImageService.Server
                         m_logging.Log(exc.ToString(), MessageTypeEnum.FAIL);
                     }
                 }).Start();
-            
         }
+
+        private void NewLogCommand(object sender, MessageRecievedEventArgs e)
+        {
+            string jsonCommand = JsonConvert.SerializeObject(e);
+            string[] arr = new string[1];
+            arr[0] = jsonCommand;
+            CommandRecievedEventArgs command = new CommandRecievedEventArgs((int)CommandEnum.NewLogCommand, arr, "");
+            NotifyClients?.Invoke(command);
+        }
+        
     }
 }
 

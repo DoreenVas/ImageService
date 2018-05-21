@@ -28,7 +28,7 @@
             </Style>
         </Grid.Style>
 
-        <TabControl HorizontalAlignment="Left" Height="321" Margin="36,33,0,0" VerticalAlignment="Top" Width="652">
+        <TabControl HorizontalAlignment="Left" Height="321" Margin="60,40" VerticalAlignment="Top" Width="652">
             <TabItem Header="Settings">
                 <views:SettingsView/>
             </TabItem>

@@ -23,8 +23,6 @@ namespace ImageService.Communication.Server
         private List<TcpClient> tcpClients;
         private Mutex mutexLock = new Mutex();
 
-        //public event EventHandler<CommandRecievedEventArgs> CommandRecieved; //todo: modify using place
-
         public TcpServerChannel(int port, ILoggingService loggingService, IClientHandler clientHandler)
         {
             this.port = port;
@@ -106,6 +104,7 @@ namespace ImageService.Communication.Server
                 loggingService.Log(exc.ToString(), MessageTypeEnum.FAIL);
             }
         }
+        
         
 
     }

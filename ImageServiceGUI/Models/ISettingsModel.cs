@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ImageService.Communication.Client;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -14,7 +15,8 @@ namespace ImageServiceGUI.Models
         string OutputDir { get; set; }
         string SourceName { get; set; }
         string LogName { get; set; }
-        int ThumbnailSize { get; set; }
+        string ThumbnailSize { get; set; }
         ObservableCollection<string> Handlers { get; set; }
+        IClientCommunicationChannel Client { get; set; } 
     }
 }

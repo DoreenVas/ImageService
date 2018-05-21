@@ -13,7 +13,7 @@ namespace ImageService.Commands
 {
     public class GetConfigCommand : ICommand
     {
-        public string Execute(string[] args, out bool result)
+        public string Execute(string[] args, out bool success)
         {
             try
             {
@@ -30,12 +30,12 @@ namespace ImageService.Commands
                 arr[3] = thumbnailSize;
                 arr[4] = handler;
                 CommandRecievedEventArgs commandSend = new CommandRecievedEventArgs((int)CommandEnum.GetConfigCommand, arr, "");
-                result = true;
+                success = true;
                 return JsonConvert.SerializeObject(commandSend);
             }
             catch (Exception exc)
             {
-                result = false;
+                success = false;
                 return exc.ToString();
             }
         }

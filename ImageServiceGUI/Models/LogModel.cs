@@ -1,4 +1,8 @@
-﻿using ImageService.Logging.Modal;
+﻿using ImageService.Communication.Client;
+using ImageService.Infrastructure;
+using ImageService.Infrastructure.Enums;
+using ImageService.Logging.Modal;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,23 +15,43 @@ namespace ImageServiceGUI.Models
 {
     class LogModel : ILogModel
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public void NotifyPropertyChanged(string propName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
-        }
-
+        public IClientCommunicationChannel Client { get; set; }
         public LogModel()
         {
+            Client = TcpClientChannel.Instance;
+            //Client.RecieveCommand();
+            Client.ServerCommandRecieved += ServerCommandRecieved;
             Logs = new ObservableCollection<MessageRecievedEventArgs>();
-            MessageRecievedEventArgs a = new MessageRecievedEventArgs() { Status = MessageTypeEnum.WARNING, Message="IWIIIII" };
-            Logs.Add(a);
-            MessageRecievedEventArgs b = new MessageRecievedEventArgs() { Status = MessageTypeEnum.INFO, Message = "OMIIIIII" };
-            Logs.Add(b);
-            MessageRecievedEventArgs c = new MessageRecievedEventArgs() { Status = MessageTypeEnum.FAIL, Message = "yayaaasss" };
-            Logs.Add(c);
-            
+            CommandRecievedEventArgs request = new CommandRecievedEventArgs((int)CommandEnum.LogCommand, null, "");
+            Client.SendCommand(request);
+        }
+
+        private void ServerCommandRecieved(CommandRecievedEventArgs commandRead)
+        {
+            if (commandRead != null && commandRead.CommandID == (int)CommandEnum.LogCommand)
+            { 
+                //Object thisLock = new Object();
+                //BindingOperations.EnableCollectionSynchronization(Handlers, thisLock);
+                List<MessageRecievedEventArgs> recievedLogs = JsonConvert.DeserializeObject<List<MessageRecievedEventArgs>>(commandRead.Args[0]); 
+                foreach (MessageRecievedEventArgs log in recievedLogs)
+                {
+                    App.Current.Dispatcher.Invoke((Action)delegate
+                    {
+                        Logs.Add(log);
+                    });
+                }
+            }
+            else if (commandRead != null && commandRead.CommandID == (int)CommandEnum.NewLogCommand)
+            {
+                //Object thisLock = new Object();
+                //BindingOperations.EnableCollectionSynchronization(Handlers, thisLock);
+                MessageRecievedEventArgs recievedLog = JsonConvert.DeserializeObject<MessageRecievedEventArgs>(commandRead.Args[0]);
+                App.Current.Dispatcher.Invoke((Action)delegate
+                {
+                    Logs.Add(recievedLog);
+                });
+                
+            }
         }
 
         private ObservableCollection<MessageRecievedEventArgs> logs;
@@ -39,6 +63,12 @@ namespace ImageServiceGUI.Models
                 NotifyPropertyChanged("Logs");
             }
         }
-       
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public void NotifyPropertyChanged(string propName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
+        }
     }
 }

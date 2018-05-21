@@ -10,21 +10,24 @@
     <UserControl.Resources>
         <local:ColorConverter x:Key="ColorConverter"/>
     </UserControl.Resources>
-
-    <StackPanel Orientation="Vertical">
-        <TextBlock TextWrapping="Wrap" Text="Logs" TextAlignment="Center" Background="LightSteelBlue" FontSize="40" FontWeight="Bold" Foreground="DarkBlue"/>
-        <DataGrid  ItemsSource="{Binding VM_Logs}" IsReadOnly="True" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" 
-                   CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserSortColumns="False" ScrollViewer.CanContentScroll="True">
+ 
+    <DockPanel Height="Auto" Width="Auto">
+            <TextBlock TextWrapping="Wrap" Text="Logs"  DockPanel.Dock="Top" TextAlignment="Center" Background="LightSteelBlue" FontSize="40" FontWeight="Bold" Foreground="DarkBlue"/>
+        <DataGrid  ItemsSource="{Binding VM_Logs}" CanUserAddRows="False" CanUserDeleteRows="False"
+                          CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserSortColumns="False"
+                          AutoGenerateColumns="False" Focusable="False" ScrollViewer.CanContentScroll="True" VerticalScrollBarVisibility="Visible"
+                          KeyboardNavigation.ControlTabNavigation="None" VerticalAlignment="Stretch" DockPanel.Dock="Bottom">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Type" Width="auto"  Binding="{Binding Status}" >
-                    <DataGridTextColumn.ElementStyle>
-                        <Style TargetType="TextBlock">
-                            <Setter Property="Background" Value="{Binding Path=Status,Converter={StaticResource ColorConverter}}"/>
-                        </Style>
-                    </DataGridTextColumn.ElementStyle>
-                </DataGridTextColumn>
-                <DataGridTextColumn  Header="Message" Width="*" Binding="{Binding Message}"></DataGridTextColumn>
-            </DataGrid.Columns>
+                    <DataGridTextColumn Header="Type" Width="auto"  Binding="{Binding Status}" >
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Background" Value="{Binding Path=Status,Converter={StaticResource ColorConverter}}"/>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn  Header="Message" Width="*" Binding="{Binding Message}"></DataGridTextColumn>
+                </DataGrid.Columns>
         </DataGrid>
-    </StackPanel>
+    </DockPanel>
+
 </UserControl>
