@@ -34,8 +34,8 @@ namespace ImageServiceGUI.Models
                     SourceName = commandRead.Args[1];
                     LogName = commandRead.Args[2];
                     ThumbnailSize = commandRead.Args[3];
-                    //Object thisLock = new Object();
-                    //BindingOperations.EnableCollectionSynchronization(Handlers, thisLock);
+                    Object thisLock = new Object();
+                    BindingOperations.EnableCollectionSynchronization(Handlers, thisLock);
                     string[] handlers = commandRead.Args[4].Split(';');
                     foreach (string handler in handlers)
                     {

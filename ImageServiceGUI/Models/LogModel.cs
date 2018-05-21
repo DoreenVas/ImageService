@@ -10,6 +10,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Data;
 
 namespace ImageServiceGUI.Models
 {
@@ -30,8 +31,8 @@ namespace ImageServiceGUI.Models
         {
             if (commandRead != null && commandRead.CommandID == (int)CommandEnum.LogCommand)
             { 
-                //Object thisLock = new Object();
-                //BindingOperations.EnableCollectionSynchronization(Handlers, thisLock);
+                Object thisLock = new Object();
+                BindingOperations.EnableCollectionSynchronization(Logs, thisLock);
                 List<MessageRecievedEventArgs> recievedLogs = JsonConvert.DeserializeObject<List<MessageRecievedEventArgs>>(commandRead.Args[0]); 
                 foreach (MessageRecievedEventArgs log in recievedLogs)
                 {
@@ -41,10 +42,10 @@ namespace ImageServiceGUI.Models
                     });
                 }
             }
-            else if (commandRead != null && commandRead.CommandID == (int)CommandEnum.NewLogCommand)
+            else if (commandRead != null && commandRead.CommandID == (int)CommandEnum.NewLogCommand && Logs!=null && Logs.Count!=0)
             {
-                //Object thisLock = new Object();
-                //BindingOperations.EnableCollectionSynchronization(Handlers, thisLock);
+                Object thisLock = new Object();
+                BindingOperations.EnableCollectionSynchronization(Logs, thisLock);
                 MessageRecievedEventArgs recievedLog = JsonConvert.DeserializeObject<MessageRecievedEventArgs>(commandRead.Args[0]);
                 App.Current.Dispatcher.Invoke((Action)delegate
                 {

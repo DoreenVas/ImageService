@@ -21,7 +21,7 @@ namespace ImageService.Communication.Server
         private ILoggingService loggingService;
         private IClientHandler clientHandler;
         private List<TcpClient> tcpClients;
-        private Mutex mutexLock = new Mutex();
+        private static Mutex mutexLock = new Mutex();
 
         public TcpServerChannel(int port, ILoggingService loggingService, IClientHandler clientHandler)
         {

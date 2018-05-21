@@ -28,7 +28,6 @@ namespace ImageServiceGUI
             InitializeComponent();
             mainWindowVM = new MainWindowVM();
             DataContext = mainWindowVM;
-
         }
     }
 }

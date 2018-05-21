@@ -14,9 +14,9 @@
     <DockPanel Height="Auto" Width="Auto">
             <TextBlock TextWrapping="Wrap" Text="Logs"  DockPanel.Dock="Top" TextAlignment="Center" Background="LightSteelBlue" FontSize="40" FontWeight="Bold" Foreground="DarkBlue"/>
         <DataGrid  ItemsSource="{Binding VM_Logs}" CanUserAddRows="False" CanUserDeleteRows="False"
-                          CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserSortColumns="False"
-                          AutoGenerateColumns="False" Focusable="False" ScrollViewer.CanContentScroll="True" VerticalScrollBarVisibility="Visible"
-                          KeyboardNavigation.ControlTabNavigation="None" VerticalAlignment="Stretch" DockPanel.Dock="Bottom">
+                         CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserSortColumns="False"
+                          AutoGenerateColumns="False" Focusable="False" ScrollViewer.CanContentScroll="True" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible"
+                          KeyboardNavigation.ControlTabNavigation="None" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" DockPanel.Dock="Bottom">
             <DataGrid.Columns>
                     <DataGridTextColumn Header="Type" Width="auto"  Binding="{Binding Status}" >
                         <DataGridTextColumn.ElementStyle>
