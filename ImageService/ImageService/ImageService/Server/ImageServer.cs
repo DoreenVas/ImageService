@@ -28,8 +28,11 @@ namespace ImageService.Server
         private IImageController m_controller;
         private ILoggingService m_logging;
         private string m_handler;
-
-        private Mutex mutexLock = new Mutex();
+        private object writeLock = new object();
+        public object getLock()
+        {
+            return writeLock;
+        }
 
         public event EventHandler<CommandRecievedEventArgs> CommandRecieved; // The event that notifies about a new Command being recieved
         public event NotifyClients NotifyClients;
@@ -127,9 +130,10 @@ namespace ImageService.Server
                             {
                                 m_logging.Log(msg, MessageTypeEnum.FAIL);
                             }
-                            mutexLock.WaitOne();
-                            writer.Write(msg);
-                            mutexLock.ReleaseMutex();
+                            lock (writeLock)
+                            {
+                                writer.Write(msg);
+                            }
                         }
                     }
                     catch (Exception exc)

@@ -18,6 +18,7 @@ using ImageService.Infrastructure;
 using ImageService.Communication.Server;
 using ImageService.Infrastructure.Enums;
 using Newtonsoft.Json;
+using System.Threading;
 
 namespace ImageService
 {   

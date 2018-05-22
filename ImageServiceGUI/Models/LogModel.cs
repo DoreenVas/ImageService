@@ -16,12 +16,18 @@ namespace ImageServiceGUI.Models
 {
     class LogModel : ILogModel
     {
+        private bool canAcceptLogs = false;
         public IClientCommunicationChannel Client { get; set; }
         public LogModel()
         {
             Client = TcpClientChannel.Instance;
             //Client.RecieveCommand();
             Client.ServerCommandRecieved += ServerCommandRecieved;
+            Initializer();
+            
+        }
+        private void Initializer()
+        {
             Logs = new ObservableCollection<MessageRecievedEventArgs>();
             CommandRecievedEventArgs request = new CommandRecievedEventArgs((int)CommandEnum.LogCommand, null, "");
             Client.SendCommand(request);
@@ -41,8 +47,9 @@ namespace ImageServiceGUI.Models
                         Logs.Add(log);
                     });
                 }
+                canAcceptLogs = true;
             }
-            else if (commandRead != null && commandRead.CommandID == (int)CommandEnum.NewLogCommand && Logs!=null && Logs.Count!=0)
+            else if (commandRead != null && commandRead.CommandID == (int)CommandEnum.NewLogCommand && Logs!=null && canAcceptLogs==true)
             {
                 Object thisLock = new Object();
                 BindingOperations.EnableCollectionSynchronization(Logs, thisLock);
@@ -51,7 +58,6 @@ namespace ImageServiceGUI.Models
                 {
                     Logs.Add(recievedLog);
                 });
-                
             }
         }
 

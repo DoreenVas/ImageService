@@ -19,7 +19,8 @@ namespace ImageService.Communication.Client
         private static TcpClientChannel instance;
         private TcpClient client;
         private bool connected = false;
-        private Mutex mutexLock = new Mutex();
+        //private Mutex mutexLock = new Mutex();
+        private object obj = new object();
         public bool IsConnected { get; private set; }
 
         public delegate void CommandRecievedFromServer(CommandRecievedEventArgs commandRead);
@@ -75,11 +76,12 @@ namespace ImageService.Communication.Client
                     NetworkStream stream = client.GetStream();
                     BinaryWriter writer = new BinaryWriter(stream);
                     string strJsonCmd = JsonConvert.SerializeObject(commandRecievedEventArgs);
-                    Console.WriteLine("Send to server:" + JsonConvert.SerializeObject(commandRecievedEventArgs, Newtonsoft.Json.Formatting.Indented)); 
-                    mutexLock.WaitOne();
-                    writer.Write(strJsonCmd);
+                    Console.WriteLine("Send to server:" + JsonConvert.SerializeObject(commandRecievedEventArgs, Newtonsoft.Json.Formatting.Indented));
+                    lock(obj)
+                    {
+                        writer.Write(strJsonCmd);
+                    }
                     // todo: maybe flush here ?
-                    mutexLock.ReleaseMutex();
                 }
                 catch (Exception exception)
                 {

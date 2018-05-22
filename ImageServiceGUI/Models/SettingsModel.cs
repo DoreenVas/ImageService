@@ -20,6 +20,10 @@ namespace ImageServiceGUI.Models
             Client = TcpClientChannel.Instance;
             Client.RecieveCommand();
             Client.ServerCommandRecieved += ServerCommandRecieved;
+            Initializer();  
+        }
+        private void Initializer()
+        {
             Handlers = new ObservableCollection<string>();
             string[] arr = new string[5];
             CommandRecievedEventArgs request = new CommandRecievedEventArgs((int)CommandEnum.GetConfigCommand, arr, "");

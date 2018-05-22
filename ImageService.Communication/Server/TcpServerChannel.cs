@@ -20,15 +20,16 @@ namespace ImageService.Communication.Server
         private TcpListener tcpListener;
         private ILoggingService loggingService;
         private IClientHandler clientHandler;
-        private List<TcpClient> tcpClients;
-        private static Mutex mutexLock = new Mutex();
+        private List<TcpClient> tcpClients = new List<TcpClient>();
+        private object writeLock;
+        private object listLock = new object();
 
         public TcpServerChannel(int port, ILoggingService loggingService, IClientHandler clientHandler)
         {
             this.port = port;
             this.clientHandler = clientHandler;
-            tcpClients = new List<TcpClient>();
             this.loggingService = loggingService;
+            writeLock = clientHandler.getLock();
         }
 
         public void Start()
@@ -46,9 +47,10 @@ namespace ImageService.Communication.Server
                     {
                         TcpClient client = tcpListener.AcceptTcpClient();
                         loggingService.Log("Established a new connection ",MessageTypeEnum.INFO);
-                        mutexLock.WaitOne();
-                        tcpClients.Add(client);
-                        mutexLock.ReleaseMutex();
+                        lock (listLock)
+                        {
+                            tcpClients.Add(client);
+                        }
                         clientHandler.HandleClient(client, tcpClients);
                     }
                     catch (SocketException se)
@@ -69,7 +71,6 @@ namespace ImageService.Communication.Server
             {
                 client.Close();
             }*/
-            //m_tcpClients.Clear();
             tcpListener.Stop();
         }
 
@@ -88,9 +89,10 @@ namespace ImageService.Communication.Server
                             NetworkStream stream = tcpClient.GetStream();
                             BinaryWriter writer = new BinaryWriter(stream);
                             string jsonCommand = JsonConvert.SerializeObject(commandRecievedEventArgs);
-                            mutexLock.WaitOne();
-                            writer.Write(jsonCommand);
-                            mutexLock.ReleaseMutex();
+                            lock (writeLock)
+                            {
+                                writer.Write(jsonCommand);
+                            }
                         }
                         catch (Exception)
                         {            
@@ -103,9 +105,7 @@ namespace ImageService.Communication.Server
             {
                 loggingService.Log(exc.ToString(), MessageTypeEnum.FAIL);
             }
-        }
-        
-        
+        }   
 
     }
 }
