@@ -1,4 +1,6 @@
-﻿using ImageServiceGUI.Models;
+﻿using ImageService.Infrastructure;
+using ImageService.Infrastructure.Enums;
+using ImageServiceGUI.Models;
 using Prism.Commands;
 using System;
 using System.Collections.Generic;
@@ -82,7 +84,10 @@ namespace ImageServiceGUI.ViewModels
 
         private void OnRemove(object obj)
         {
-            //SelectedHandler = null;
+            string[] arr = new string[1];
+            arr[0] = selectedHandler;
+            CommandRecievedEventArgs command = new CommandRecievedEventArgs((int)CommandEnum.CloseCommand, arr, selectedHandler);
+            settingsModel.Client.SendCommand(command);
         }
         
     }

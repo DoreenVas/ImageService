@@ -19,7 +19,6 @@ namespace ImageService.Communication.Client
         private static TcpClientChannel instance;
         private TcpClient client;
         private bool connected = false;
-        //private Mutex mutexLock = new Mutex();
         private object obj = new object();
         public bool IsConnected { get; private set; }
 
@@ -120,7 +119,6 @@ namespace ImageService.Communication.Client
             connected = false;
             CommandRecievedEventArgs command = new CommandRecievedEventArgs((int)CommandEnum.ClientClosedCommand, null, "bla");
             SendCommand(command);
-            //client.Close(); 
         }
         
     }

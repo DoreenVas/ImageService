@@ -21,7 +21,6 @@ namespace ImageServiceGUI.Models
         public LogModel()
         {
             Client = TcpClientChannel.Instance;
-            //Client.RecieveCommand();
             Client.ServerCommandRecieved += ServerCommandRecieved;
             Initializer();
             

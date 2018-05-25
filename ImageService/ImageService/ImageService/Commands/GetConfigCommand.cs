@@ -17,7 +17,6 @@ namespace ImageService.Commands
         {
             try
             {
-                string handler = ConfigurationManager.AppSettings.Get("Handler");
                 string outputDir = ConfigurationManager.AppSettings.Get("OutputDir");
                 string thumbnailSize = ConfigurationManager.AppSettings.Get("ThumbnailSize");
                 string eventSourceName = ConfigurationManager.AppSettings.Get("SourceName");
@@ -28,7 +27,7 @@ namespace ImageService.Commands
                 arr[1] = eventSourceName;
                 arr[2] = logName;
                 arr[3] = thumbnailSize;
-                arr[4] = handler;
+                arr[4] = args[0];
                 CommandRecievedEventArgs commandSend = new CommandRecievedEventArgs((int)CommandEnum.GetConfigCommand, arr, "");
                 success = true;
                 return JsonConvert.SerializeObject(commandSend);

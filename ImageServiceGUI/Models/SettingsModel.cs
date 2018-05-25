@@ -25,7 +25,7 @@ namespace ImageServiceGUI.Models
         private void Initializer()
         {
             Handlers = new ObservableCollection<string>();
-            string[] arr = new string[5];
+            string[] arr = new string[1];
             CommandRecievedEventArgs request = new CommandRecievedEventArgs((int)CommandEnum.GetConfigCommand, arr, "");
             Client.SendCommand(request);
         }
@@ -47,6 +47,14 @@ namespace ImageServiceGUI.Models
                     {
                         Handlers.Add(handler);
                     });
+                    }
+                }
+                else if (commandRead != null && commandRead.CommandID == (int)CommandEnum.CloseCommand)
+                {
+                    if (Handlers.Contains(commandRead.Args[0]))
+                    {
+                        Handlers.Remove(commandRead.Args[0]);
+                        NotifyPropertyChanged("Handlers");
                     }
                 }
             

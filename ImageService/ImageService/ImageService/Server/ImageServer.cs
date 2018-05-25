@@ -33,6 +33,7 @@ namespace ImageService.Server
         {
             return writeLock;
         }
+        List<string> Handlers;
 
         public event EventHandler<CommandRecievedEventArgs> CommandRecieved; // The event that notifies about a new Command being recieved
         public event NotifyClients NotifyClients;
@@ -50,9 +51,12 @@ namespace ImageService.Server
             m_logging.MessageRecieved += NewLogCommand;
             m_handler = handler;
 
+            Handlers = new List<string>();
+
             string[] paths = m_handler.Split(';');
             foreach (var path in paths)
             {
+                Handlers.Add(path);
                 CreateDirectoryHandler(path);
             }
         }
@@ -119,6 +123,28 @@ namespace ImageService.Server
                                 client.Close();
                                 m_logging.Log("A client was removed ", MessageTypeEnum.INFO);
                                 break;
+                            }
+                            else if (commandRecievedEventArgs.CommandID == (int)CommandEnum.CloseCommand)
+                            {
+                                CommandRecieved?.Invoke(this, commandRecievedEventArgs);
+                                if (Handlers.Contains(commandRecievedEventArgs.RequestDirPath))
+                                    Handlers.Remove(commandRecievedEventArgs.RequestDirPath);
+                                Thread.Sleep(100);
+                                string[] arr = new string[1];
+                                arr[0] = commandRecievedEventArgs.RequestDirPath;
+                                CommandRecievedEventArgs command2 = new CommandRecievedEventArgs((int)CommandEnum.CloseCommand,arr , "");
+                                NotifyClients?.Invoke(command2);
+                                break;
+                            }
+                            else if(commandRecievedEventArgs.CommandID == (int)CommandEnum.GetConfigCommand)
+                            {
+                                string handlers = "";
+                                foreach (string handler in Handlers)
+                                {
+                                    handlers += handler + ";";
+                                }
+                                handlers.TrimEnd(';');
+                                commandRecievedEventArgs.Args[0] = handlers; 
                             }
                             bool success;
                             string msg = m_controller.ExecuteCommand(commandRecievedEventArgs.CommandID, commandRecievedEventArgs.Args, out success);
