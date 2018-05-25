@@ -75,7 +75,7 @@ namespace ImageService.Communication.Client
                     NetworkStream stream = client.GetStream();
                     BinaryWriter writer = new BinaryWriter(stream);
                     string strJsonCmd = JsonConvert.SerializeObject(commandRecievedEventArgs);
-                    Console.WriteLine("Send to server:" + JsonConvert.SerializeObject(commandRecievedEventArgs, Newtonsoft.Json.Formatting.Indented));
+                    //Console.WriteLine("Send to server:" + JsonConvert.SerializeObject(commandRecievedEventArgs, Newtonsoft.Json.Formatting.Indented));
                     lock(obj)
                     {
                         writer.Write(strJsonCmd);
@@ -83,8 +83,7 @@ namespace ImageService.Communication.Client
                 }
                 catch (Exception exception)
                 {
-                    Console.WriteLine(exception.ToString());
-                    throw exception;
+                    //Console.WriteLine(exception.ToString());
                 }
             }).Start();
         }
@@ -95,21 +94,19 @@ namespace ImageService.Communication.Client
             {
                 try
                 {
-                    NetworkStream stream = client.GetStream();
-                    BinaryReader reader = new BinaryReader(stream);
-
                     while (connected)
                     {
-
+                        NetworkStream stream = client.GetStream();
+                        BinaryReader reader = new BinaryReader(stream);
                         string commandRead = reader.ReadString();
-                        Console.WriteLine("Recieved from server:\n" + commandRead);
+                        //Console.WriteLine("Recieved from server:\n" + commandRead);
                         CommandRecievedEventArgs command = JsonConvert.DeserializeObject<CommandRecievedEventArgs>(commandRead);
                         ServerCommandRecieved?.Invoke(command);
                     }
                 }
                 catch (Exception exception)
                 {
-                    Console.WriteLine(exception.ToString());
+                    //Console.WriteLine(exception.ToString());
                 }
             }).Start();
         }

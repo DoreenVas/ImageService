@@ -89,6 +89,6 @@ namespace ImageServiceGUI.ViewModels
             CommandRecievedEventArgs command = new CommandRecievedEventArgs((int)CommandEnum.CloseCommand, arr, selectedHandler);
             settingsModel.Client.SendCommand(command);
         }
-        
+   
     }
 }

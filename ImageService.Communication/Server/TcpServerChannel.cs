@@ -67,10 +67,6 @@ namespace ImageService.Communication.Server
 
         public void Stop()
         {
-            /*foreach (TcpClient client in m_tcpClients)
-            {
-                client.Close();
-            }*/
             tcpListener.Stop();
         }
 

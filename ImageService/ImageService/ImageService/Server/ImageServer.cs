@@ -132,11 +132,11 @@ namespace ImageService.Server
                                 Thread.Sleep(100);
                                 string[] arr = new string[1];
                                 arr[0] = commandRecievedEventArgs.RequestDirPath;
-                                CommandRecievedEventArgs command2 = new CommandRecievedEventArgs((int)CommandEnum.CloseCommand,arr , "");
+                                CommandRecievedEventArgs command2 = new CommandRecievedEventArgs((int)CommandEnum.CloseCommand, arr, "");
                                 NotifyClients?.Invoke(command2);
-                                break;
+                                continue;
                             }
-                            else if(commandRecievedEventArgs.CommandID == (int)CommandEnum.GetConfigCommand)
+                            else if (commandRecievedEventArgs.CommandID == (int)CommandEnum.GetConfigCommand)
                             {
                                 string handlers = "";
                                 foreach (string handler in Handlers)
@@ -145,13 +145,13 @@ namespace ImageService.Server
                                 }
                                 if (handlers != "")
                                     handlers.TrimEnd(';');
-                                commandRecievedEventArgs.Args[0] = handlers; 
+                                commandRecievedEventArgs.Args[0] = handlers;
                             }
                             bool success;
                             string msg = m_controller.ExecuteCommand(commandRecievedEventArgs.CommandID, commandRecievedEventArgs.Args, out success);
                             if (success)
                             {
-                                m_logging.Log("Success executing command: "+ (CommandEnum)commandRecievedEventArgs.CommandID, MessageTypeEnum.INFO);
+                                m_logging.Log("Success executing command: " + (CommandEnum)commandRecievedEventArgs.CommandID, MessageTypeEnum.INFO);
                             }
                             else
                             {
