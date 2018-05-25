@@ -80,11 +80,11 @@ namespace ImageService.Communication.Client
                     {
                         writer.Write(strJsonCmd);
                     }
-                    // todo: maybe flush here ?
                 }
                 catch (Exception exception)
                 {
                     Console.WriteLine(exception.ToString());
+                    throw exception;
                 }
             }).Start();
         }

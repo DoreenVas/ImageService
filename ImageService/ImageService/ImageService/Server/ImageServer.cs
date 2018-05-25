@@ -143,7 +143,8 @@ namespace ImageService.Server
                                 {
                                     handlers += handler + ";";
                                 }
-                                handlers.TrimEnd(';');
+                                if (handlers != "")
+                                    handlers.TrimEnd(';');
                                 commandRecievedEventArgs.Args[0] = handlers; 
                             }
                             bool success;

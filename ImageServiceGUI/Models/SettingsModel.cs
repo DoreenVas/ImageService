@@ -40,22 +40,31 @@ namespace ImageServiceGUI.Models
                     ThumbnailSize = commandRead.Args[3];
                     Object thisLock = new Object();
                     BindingOperations.EnableCollectionSynchronization(Handlers, thisLock);
-                    string[] handlers = commandRead.Args[4].Split(';');
-                    foreach (string handler in handlers)
+                    if (commandRead.Args[4] != "")
                     {
-                    App.Current.Dispatcher.Invoke((Action)delegate
-                    {
-                        Handlers.Add(handler);
-                    });
+                        string[] handlers = commandRead.Args[4].Split(';');
+                        foreach (string handler in handlers)
+                        {
+                            if (handler != "") {
+                                App.Current.Dispatcher.Invoke((Action)delegate
+                                {
+                                    Handlers.Add(handler);
+                                });
+                            }
+                        }
                     }
                 }
                 else if (commandRead != null && commandRead.CommandID == (int)CommandEnum.CloseCommand)
                 {
+                    Object thisLock = new Object();
+                    BindingOperations.EnableCollectionSynchronization(Handlers, thisLock);
                     if (Handlers.Contains(commandRead.Args[0]))
-                    {
-                        Handlers.Remove(commandRead.Args[0]);
-                        NotifyPropertyChanged("Handlers");
-                    }
+                        {
+                            App.Current.Dispatcher.Invoke((Action)delegate
+                            {
+                                Handlers.Remove(commandRead.Args[0]);
+                            });      
+                        }
                 }
             
         }
