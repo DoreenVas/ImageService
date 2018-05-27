@@ -20,7 +20,7 @@ namespace ImageServiceGUI.Models
         public IClientCommunicationChannel Client { get; set; }
 
         /// <summary>
-        /// Creates a new settings model instance.
+        /// Gets a client Instance and registers to the ServerCommandRecieved event.
         /// </summary>
         public SettingsModel()
         {
@@ -31,7 +31,8 @@ namespace ImageServiceGUI.Models
         }
 
         /// <summary>
-        /// Initializes a new settings model instance.
+        /// Initializes a new settings model.
+        /// Sends the Server a GetConfigCommand.
         /// </summary>
         private void Initializer()
         {
@@ -47,7 +48,8 @@ namespace ImageServiceGUI.Models
         /// <param name="commandRead">The command recieved arguments.</param>
         private void ServerCommandRecieved(CommandRecievedEventArgs commandRead)
         {
-                if (commandRead != null && commandRead.CommandID == (int)CommandEnum.GetConfigCommand)
+            //GetConfigCommand recieved. We set the correct properties and add the handlers to the Handlers ObservableCollection.
+            if (commandRead != null && commandRead.CommandID == (int)CommandEnum.GetConfigCommand)
                 {
                     OutputDir = commandRead.Args[0];
                     SourceName = commandRead.Args[1];
@@ -69,7 +71,9 @@ namespace ImageServiceGUI.Models
                         }
                     }
                 }
-                else if (commandRead != null && commandRead.CommandID == (int)CommandEnum.CloseCommand)
+
+            //CloseCommand recieved. We remove the given handler from the Handlers ObservableCollection.
+            else if (commandRead != null && commandRead.CommandID == (int)CommandEnum.CloseCommand)
                 {
                     Object thisLock = new Object();
                     BindingOperations.EnableCollectionSynchronization(Handlers, thisLock);

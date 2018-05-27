@@ -18,6 +18,7 @@ namespace ImageServiceGUI.Views
 {
     /// <summary>
     /// Interaction logic for SettingsView.xaml
+    /// Creates a SettingsViewModel and sets it to be the DataContext.
     /// </summary>
     public partial class SettingsView : UserControl
     {

@@ -43,6 +43,7 @@ namespace ImageService.Communication.Server
 
         /// <summary>
         /// Starts the server.
+        /// Accepts new connections, adds them to the list of clients and activates the HandleClient function on each one.
         /// </summary>
         public void Start()
         {
@@ -86,7 +87,7 @@ namespace ImageService.Communication.Server
         }
 
         /// <summary>
-        /// Notifies clients about a command recieved.
+        /// Notifies all clients about a command recieved.
         /// </summary>
         /// <param name="commandRecievedEventArgs">The command's arguments.</param>
         public void NotifyClients(CommandRecievedEventArgs commandRecievedEventArgs)

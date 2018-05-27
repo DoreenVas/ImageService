@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace ImageServiceGUI.Models
 {
     /// <summary>
-    /// Represents a main window model.
+    /// Represents a main window model Interface.
     /// </summary>
     interface IMainWindowModel : INotifyPropertyChanged
     {

@@ -18,6 +18,7 @@ namespace ImageServiceGUI.Views
 {
     /// <summary>
     /// Interaction logic for LogsView.xaml
+    /// Creates a LogsViewModel and sets it to be the DataContext.
     /// </summary>
     public partial class LogsView : UserControl
     {

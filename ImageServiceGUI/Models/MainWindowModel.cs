@@ -16,7 +16,7 @@ namespace ImageServiceGUI.Models
         public IClientCommunicationChannel Client { get; set; }
 
         /// <summary>
-        /// Creates a new main window model instance.
+        /// Gets a client Instance and recieved the IsConnected status.
         /// </summary>
         public MainWindowModel()
         {

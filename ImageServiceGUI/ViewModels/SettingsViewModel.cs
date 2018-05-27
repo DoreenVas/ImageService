@@ -99,6 +99,7 @@ namespace ImageServiceGUI.ViewModels
 
         /// <summary>
         /// Initiates remove procedure.
+        /// Sends the server CloseCommand.
         /// </summary>
         /// <param name="obj">The argument object.</param>
         private void OnRemove(object obj)

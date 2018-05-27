@@ -100,6 +100,11 @@ namespace ImageService.Server
             m_logging.Log("Server is Closing ", MessageTypeEnum.INFO);
         }
 
+        /// <summary>
+        /// The function that handlers each client. reads commands, executes them and sends a command back if needed.
+        /// </summary>
+        /// <param name="client"></param>
+        /// <param name="clients"></param>
         public void HandleClient(TcpClient client, List<TcpClient> clients)
         {
                 new Task(() =>
@@ -172,6 +177,11 @@ namespace ImageService.Server
                 }).Start();
         }
 
+        /// <summary>
+        /// Activates NotifyClients event if a new log has arrived.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void NewLogCommand(object sender, MessageRecievedEventArgs e)
         {
             string jsonCommand = JsonConvert.SerializeObject(e);

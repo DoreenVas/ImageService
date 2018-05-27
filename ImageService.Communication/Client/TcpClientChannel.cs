@@ -28,6 +28,9 @@ namespace ImageService.Communication.Client
         public delegate void CommandRecievedFromServer(CommandRecievedEventArgs commandRead);
         public event Client.CommandRecievedFromServer ServerCommandRecieved;
 
+        /// <summary>
+        /// Singelton.
+        /// </summary>
         public static TcpClientChannel Instance
         {
             get
@@ -133,7 +136,7 @@ namespace ImageService.Communication.Client
         public void CloseClient()
         {
             connected = false;
-            CommandRecievedEventArgs command = new CommandRecievedEventArgs((int)CommandEnum.ClientClosedCommand, null, "bla");
+            CommandRecievedEventArgs command = new CommandRecievedEventArgs((int)CommandEnum.ClientClosedCommand, null, "");
             SendCommand(command);
         }
         

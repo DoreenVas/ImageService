@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 namespace ImageService.Commands
 {
     /// <summary>
-    /// Represents a log command.
+    /// Returns all the Logs from the start of the service.
     /// </summary>
     class LogCommand : ICommand
     {

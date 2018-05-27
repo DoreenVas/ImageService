@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace ImageServiceGUI.Models
 {
     /// <summary>
-    /// Represents a settings window model.
+    /// Represents a settings window model Interface.
     /// </summary>
     interface ISettingsModel :INotifyPropertyChanged
     {

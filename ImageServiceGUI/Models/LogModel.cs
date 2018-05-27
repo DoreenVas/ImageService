@@ -23,7 +23,7 @@ namespace ImageServiceGUI.Models
         public IClientCommunicationChannel Client { get; set; }
 
         /// <summary>
-        /// Creates a new log model instance.
+        /// Gets a client Instance and registers to the ServerCommandRecieved event.
         /// </summary>
         public LogModel()
         {
@@ -35,6 +35,7 @@ namespace ImageServiceGUI.Models
 
         /// <summary>
         /// Initializes a new log model.
+        /// Sends the Server a LogCommand to recieve all the logs so far.
         /// </summary>
         private void Initializer()
         {
@@ -49,6 +50,7 @@ namespace ImageServiceGUI.Models
         /// <param name="commandRead">The commnad received arguments.</param>
         private void ServerCommandRecieved(CommandRecievedEventArgs commandRead)
         {
+            //LogCommand recieved. We add the Logs to the Logs ObservableCollection.
             if (commandRead != null && commandRead.CommandID == (int)CommandEnum.LogCommand)
             { 
                 Object thisLock = new Object();
@@ -63,6 +65,7 @@ namespace ImageServiceGUI.Models
                 }
                 canAcceptLogs = true;
             }
+            //NewLogCommand recieved. We add the Log to the Logs ObservableCollection.
             else if (commandRead != null && commandRead.CommandID == (int)CommandEnum.NewLogCommand && Logs!=null && canAcceptLogs==true)
             {
                 Object thisLock = new Object();

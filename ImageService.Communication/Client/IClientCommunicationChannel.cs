@@ -10,7 +10,7 @@ namespace ImageService.Communication.Client
     public delegate void CommandRecievedFromServer(CommandRecievedEventArgs commandRead);
 
     /// <summary>
-    /// Represents a client communication channel.
+    /// Represents a client communication channel Interface.
     /// </summary>
     public interface IClientCommunicationChannel
     {

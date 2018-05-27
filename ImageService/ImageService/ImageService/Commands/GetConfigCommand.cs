@@ -12,14 +12,14 @@ using System.Threading.Tasks;
 namespace ImageService.Commands
 {
     /// <summary>
-    /// Represents a get confuguration command.
+    /// Returns the configuration based on the config and list of handlers recieved.
     /// </summary>
     public class GetConfigCommand : ICommand
     {
         /// <summary>
         /// Executes a get confuguration command.
         /// </summary>
-        /// <param name="args">The command's arguments.</param>
+        /// <param name="args">the handlers in args[0]</param>
         /// <param name="success">True if succeeded.</param>
         /// <returns></returns>
         public string Execute(string[] args, out bool success)

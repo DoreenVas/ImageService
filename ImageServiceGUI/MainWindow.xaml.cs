@@ -18,6 +18,7 @@ namespace ImageServiceGUI
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
+    /// Creates a MainWindowVM and sets it to be the DataContext.
     /// </summary>
     public partial class MainWindow : Window
     {   

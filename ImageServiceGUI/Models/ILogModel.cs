@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace ImageServiceGUI.Models
 {
     /// <summary>
-    /// Represents a log model.
+    /// Represents a log model Interface.
     /// </summary>
     interface ILogModel : INotifyPropertyChanged
     {
