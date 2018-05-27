@@ -12,9 +12,16 @@ using System.Windows.Data;
 
 namespace ImageServiceGUI.Models
 {
+    /// <summary>
+    /// Represents a settings model.
+    /// </summary>
     class SettingsModel : ISettingsModel
     {
         public IClientCommunicationChannel Client { get; set; }
+
+        /// <summary>
+        /// Creates a new settings model instance.
+        /// </summary>
         public SettingsModel()
         {
             Client = TcpClientChannel.Instance;
@@ -22,6 +29,10 @@ namespace ImageServiceGUI.Models
             Client.ServerCommandRecieved += ServerCommandRecieved;
             Initializer();  
         }
+
+        /// <summary>
+        /// Initializes a new settings model instance.
+        /// </summary>
         private void Initializer()
         {
             Handlers = new ObservableCollection<string>();
@@ -30,6 +41,10 @@ namespace ImageServiceGUI.Models
             Client.SendCommand(request);
         }
 
+        /// <summary>
+        /// Recieves command from server.
+        /// </summary>
+        /// <param name="commandRead">The command recieved arguments.</param>
         private void ServerCommandRecieved(CommandRecievedEventArgs commandRead)
         {
                 if (commandRead != null && commandRead.CommandID == (int)CommandEnum.GetConfigCommand)
@@ -117,6 +132,10 @@ namespace ImageServiceGUI.Models
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        /// <summary>
+        /// Notifies that a property has changed.
+        /// </summary>
+        /// <param name="propName">The property name.</param>
         public void NotifyPropertyChanged(string propName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));

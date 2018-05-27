@@ -10,11 +10,17 @@ using System.Threading.Tasks;
 
 namespace ImageServiceGUI.ViewModels
 {
+    /// <summary>
+    /// Represents a logs view model.
+    /// </summary>
     class LogsViewModel : INotifyPropertyChanged
     {
         private ILogModel logModel;
         public event PropertyChangedEventHandler PropertyChanged;
 
+        /// <summary>
+        /// Creates a new logs view model instance.
+        /// </summary>
         public LogsViewModel()
         {
             logModel = new LogModel();
@@ -24,6 +30,10 @@ namespace ImageServiceGUI.ViewModels
             };
         }
 
+        /// <summary>
+        /// Notifies that a property has changed.
+        /// </summary>
+        /// <param name="propName">The property name.</param>
         public void NotifyPropertyChanged(string propName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));

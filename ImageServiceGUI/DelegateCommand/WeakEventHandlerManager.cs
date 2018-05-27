@@ -54,6 +54,13 @@ namespace Microsoft.Practices.Prism.Commands
             }
         }
 
+        /// <summary>
+        /// Cleans up old handlers.
+        /// </summary>
+        /// <param name="handlers">The handlers.</param>
+        /// <param name="callees">The callees.</param>
+        /// <param name="count">The count.</param>
+        /// <returns></returns>
         private static int CleanupOldHandlers(List<WeakReference> handlers, EventHandler[] callees, int count)
         {
             for (int i = handlers.Count - 1; i >= 0; i--)

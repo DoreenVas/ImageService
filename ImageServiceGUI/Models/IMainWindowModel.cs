@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace ImageServiceGUI.Models
 {
+    /// <summary>
+    /// Represents a main window model.
+    /// </summary>
     interface IMainWindowModel : INotifyPropertyChanged
     {
         IClientCommunicationChannel Client { get; set; }

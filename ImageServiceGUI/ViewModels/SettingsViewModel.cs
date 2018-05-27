@@ -14,11 +14,17 @@ using System.Windows.Input;
 
 namespace ImageServiceGUI.ViewModels
 {
+    /// <summary>
+    /// Represents a settings view model.
+    /// </summary>
     class SettingsViewModel :INotifyPropertyChanged
     {
         private ISettingsModel settingsModel;
         public ICommand RemoveCommand { get; private set; }
         
+        /// <summary>
+        /// Creates a settings view model instance.
+        /// </summary>
         public SettingsViewModel()
         {
             settingsModel =new SettingsModel();
@@ -30,6 +36,11 @@ namespace ImageServiceGUI.ViewModels
             RemoveCommand = new DelegateCommand<object>(OnRemove, CanRemove);
         }
         public event PropertyChangedEventHandler PropertyChanged;
+
+        /// <summary>
+        /// Notifies that a property has changed.
+        /// </summary>
+        /// <param name="propName">The property name.</param>
         public void NotifyPropertyChanged(string propName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
@@ -73,6 +84,11 @@ namespace ImageServiceGUI.ViewModels
             }
         }
         
+        /// <summary>
+        /// Checks if can be removed.
+        /// </summary>
+        /// <param name="obj">The object.</param>
+        /// <returns></returns>
         private bool CanRemove(object obj)
         {
             if (SelectedHandler != null)
@@ -81,7 +97,10 @@ namespace ImageServiceGUI.ViewModels
                 return false;
         }
 
-
+        /// <summary>
+        /// Initiates remove procedure.
+        /// </summary>
+        /// <param name="obj">The argument object.</param>
         private void OnRemove(object obj)
         {
             string[] arr = new string[1];

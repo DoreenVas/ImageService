@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 
 namespace ImageServiceGUI.Models
 {
+    /// <summary>
+    /// Represents a log model.
+    /// </summary>
     interface ILogModel : INotifyPropertyChanged
     {
         ObservableCollection<MessageRecievedEventArgs> Logs { get; set; }

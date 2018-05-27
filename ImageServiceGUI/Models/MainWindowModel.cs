@@ -8,10 +8,16 @@ using System.Threading.Tasks;
 
 namespace ImageServiceGUI.Models
 {
+    /// <summary>
+    /// Represents a main window model.
+    /// </summary>
     class MainWindowModel : IMainWindowModel
     {
         public IClientCommunicationChannel Client { get; set; }
 
+        /// <summary>
+        /// Creates a new main window model instance.
+        /// </summary>
         public MainWindowModel()
         {
             Client = TcpClientChannel.Instance;
@@ -31,6 +37,10 @@ namespace ImageServiceGUI.Models
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        /// <summary>
+        /// Notifies that a property has changed.
+        /// </summary>
+        /// <param name="propName">The property name.</param>
         public void NotifyPropertyChanged(string propName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));

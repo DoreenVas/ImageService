@@ -14,10 +14,17 @@ using System.Windows.Data;
 
 namespace ImageServiceGUI.Models
 {
+    /// <summary>
+    /// Represents a log model.
+    /// </summary>
     class LogModel : ILogModel
     {
         private bool canAcceptLogs = false;
         public IClientCommunicationChannel Client { get; set; }
+
+        /// <summary>
+        /// Creates a new log model instance.
+        /// </summary>
         public LogModel()
         {
             Client = TcpClientChannel.Instance;
@@ -25,6 +32,10 @@ namespace ImageServiceGUI.Models
             Initializer();
             
         }
+
+        /// <summary>
+        /// Initializes a new log model.
+        /// </summary>
         private void Initializer()
         {
             Logs = new ObservableCollection<MessageRecievedEventArgs>();
@@ -32,6 +43,10 @@ namespace ImageServiceGUI.Models
             Client.SendCommand(request);
         }
 
+        /// <summary>
+        /// Recieves a new command.
+        /// </summary>
+        /// <param name="commandRead">The commnad received arguments.</param>
         private void ServerCommandRecieved(CommandRecievedEventArgs commandRead)
         {
             if (commandRead != null && commandRead.CommandID == (int)CommandEnum.LogCommand)
@@ -72,6 +87,10 @@ namespace ImageServiceGUI.Models
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        /// <summary>
+        /// Notifies that a property has changed.
+        /// </summary>
+        /// <param name="propName">The property name.</param>
         public void NotifyPropertyChanged(string propName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
