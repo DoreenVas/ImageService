@@ -12,6 +12,9 @@ using System.Threading.Tasks;
 
 namespace ImageService.Commands
 {
+    /// <summary>
+    /// Represents a log command.
+    /// </summary>
     class LogCommand : ICommand
     {
         private ILoggingService m_logging;
@@ -20,6 +23,12 @@ namespace ImageService.Commands
             m_logging = logging;      
         }
 
+        /// <summary>
+        /// Executes a log command.
+        /// </summary>
+        /// <param name="args">The command's arguments.</param>
+        /// <param name="result">True if succeeded.</param>
+        /// <returns></returns>
         public string Execute(string[] args, out bool result)
         {
             try

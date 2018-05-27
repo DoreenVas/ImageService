@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace ImageService.Communication.Server
 {
+    /// <summary>
+    /// Represents a server communication channel.
+    /// </summary>
     public interface IServerCommunicationChannel 
     {
         void Start();

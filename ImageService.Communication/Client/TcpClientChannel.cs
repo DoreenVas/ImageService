@@ -14,6 +14,9 @@ using System.Xml;
 
 namespace ImageService.Communication.Client
 {
+    /// <summary>
+    /// Represents a TCP client channel.
+    /// </summary>
     public class TcpClientChannel : IClientCommunicationChannel
     {
         private static TcpClientChannel instance;
@@ -37,6 +40,9 @@ namespace ImageService.Communication.Client
             }
         }
 
+        /// <summary>
+        /// Creates a new TCP client channel instance.
+        /// </summary>
         private TcpClientChannel() 
 
         {
@@ -47,6 +53,9 @@ namespace ImageService.Communication.Client
             }
         }
 
+        /// <summary>
+        /// Starts a TCP client channel.
+        /// </summary>
         private void Start()
         {
             try
@@ -66,6 +75,10 @@ namespace ImageService.Communication.Client
             }
         }
 
+        /// <summary>
+        /// Sends a command.
+        /// </summary>
+        /// <param name="commandRecievedEventArgs">The command's arguments.</param>
         public void SendCommand(CommandRecievedEventArgs commandRecievedEventArgs)
         {
             new Task(() =>
@@ -88,6 +101,9 @@ namespace ImageService.Communication.Client
             }).Start();
         }
 
+        /// <summary>
+        /// Recieves a command.
+        /// </summary>
         public void RecieveCommand()
         {
             new Task(() =>
@@ -111,6 +127,9 @@ namespace ImageService.Communication.Client
             }).Start();
         }
 
+        /// <summary>
+        /// Closes a client.
+        /// </summary>
         public void CloseClient()
         {
             connected = false;

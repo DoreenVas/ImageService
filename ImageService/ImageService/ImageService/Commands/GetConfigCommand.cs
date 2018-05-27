@@ -11,8 +11,17 @@ using System.Threading.Tasks;
 
 namespace ImageService.Commands
 {
+    /// <summary>
+    /// Represents a get confuguration command.
+    /// </summary>
     public class GetConfigCommand : ICommand
     {
+        /// <summary>
+        /// Executes a get confuguration command.
+        /// </summary>
+        /// <param name="args">The command's arguments.</param>
+        /// <param name="success">True if succeeded.</param>
+        /// <returns></returns>
         public string Execute(string[] args, out bool success)
         {
             try

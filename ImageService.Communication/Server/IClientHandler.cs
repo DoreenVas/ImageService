@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace ImageService.Communication.Server
 {
+    /// <summary>
+    /// Represents a client handler.
+    /// </summary>
     public interface IClientHandler
     {
         void HandleClient(TcpClient client, List<TcpClient> a_clients);

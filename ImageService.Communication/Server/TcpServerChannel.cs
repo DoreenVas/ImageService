@@ -14,6 +14,9 @@ using System.Threading.Tasks;
 
 namespace ImageService.Communication.Server
 {
+    /// <summary>
+    /// Represents a TCP server communication channel.
+    /// </summary>
     public class TcpServerChannel : IServerCommunicationChannel
     {
         private int port;
@@ -24,6 +27,12 @@ namespace ImageService.Communication.Server
         private object writeLock;
         private object listLock = new object();
 
+        /// <summary>
+        /// Represents a TCP server channel.
+        /// </summary>
+        /// <param name="port">The server's port.</param>
+        /// <param name="loggingService">The logging service.</param>
+        /// <param name="clientHandler">The client handler.</param>
         public TcpServerChannel(int port, ILoggingService loggingService, IClientHandler clientHandler)
         {
             this.port = port;
@@ -32,6 +41,9 @@ namespace ImageService.Communication.Server
             writeLock = clientHandler.getLock();
         }
 
+        /// <summary>
+        /// Starts the server.
+        /// </summary>
         public void Start()
         {
             IPEndPoint ipEndPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), port);
@@ -65,12 +77,18 @@ namespace ImageService.Communication.Server
             task.Start();
         }
 
+        /// <summary>
+        /// Stops the server.
+        /// </summary>
         public void Stop()
         {
             tcpListener.Stop();
         }
 
-        
+        /// <summary>
+        /// Notifies clients about a command recieved.
+        /// </summary>
+        /// <param name="commandRecievedEventArgs">The command's arguments.</param>
         public void NotifyClients(CommandRecievedEventArgs commandRecievedEventArgs)
         {
             try
