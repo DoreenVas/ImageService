@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.2015
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageService", "ImageService\ImageService.csproj", "{A737836F-1C72-42B2-852A-E866140B2D92}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageServiceGUI", "ImageServiceGUI\ImageServiceGUI.csproj", "{A71C8817-6A93-4131-9955-2F9C5F197EE7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageService.Infrastructure", "ImageService.Infrastructure\ImageService.Infrastructure.csproj", "{2C4F7489-7ED4-4CBD-B994-63C01CB56467}"
@@ -17,16 +15,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerTest", "ServerTest\Se
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientTest", "ClientTest\ClientTest.csproj", "{CB7139CF-FA75-4701-860C-15870B59BDF0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageServiceWeb", "ImageServiceWeb\ImageServiceWeb.csproj", "{7862E89B-3A51-48A9-A91D-100EEE24EED1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{A737836F-1C72-42B2-852A-E866140B2D92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A737836F-1C72-42B2-852A-E866140B2D92}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A737836F-1C72-42B2-852A-E866140B2D92}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A737836F-1C72-42B2-852A-E866140B2D92}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A71C8817-6A93-4131-9955-2F9C5F197EE7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A71C8817-6A93-4131-9955-2F9C5F197EE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A71C8817-6A93-4131-9955-2F9C5F197EE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -51,6 +47,10 @@ Global
 		{CB7139CF-FA75-4701-860C-15870B59BDF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CB7139CF-FA75-4701-860C-15870B59BDF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CB7139CF-FA75-4701-860C-15870B59BDF0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7862E89B-3A51-48A9-A91D-100EEE24EED1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7862E89B-3A51-48A9-A91D-100EEE24EED1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7862E89B-3A51-48A9-A91D-100EEE24EED1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7862E89B-3A51-48A9-A91D-100EEE24EED1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
