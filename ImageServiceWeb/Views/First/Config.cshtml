@@ -5,4 +5,47 @@
 }
 
 <h2>Config</h2>
+<div>
+    <table>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.OutputDir)
+            </th>
+            <td>@Model.OutputDir</td>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.SourceName)
+            </th>
+            <td>@Model.SourceName</td>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.LogName)
+            </th>
+            <td>@Model.LogName</td>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ThumbnailSize)
+            </th>
+            <td>@Model.ThumbnailSize</td>
+        </tr>
+    </table>
+
+    <hr />
+    <table>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Handlers)
+            </th>
+        </tr>
+        @foreach (string handler in Model.Handlers)
+        {
+            <tr>
+                <td>@handler</td>
+            </tr>
+        }
+    </table>
+</div>
 
