@@ -21,5 +21,11 @@ namespace ImageServiceWeb.Controllers
         {
             return View(configModel);
         }
+
+        [HttpGet]
+        public ActionResult DeleteHandler()
+        {
+            return View();
+        }
     }
 }
