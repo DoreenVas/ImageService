@@ -10,6 +10,8 @@ namespace ImageServiceWeb.Controllers
     public class FirstController : Controller
     {
         static ConfigModel configModel = new ConfigModel();
+        static LogsModel logsModel = new LogsModel();
+
         // GET: First
         public ActionResult Index()
         {
@@ -26,6 +28,12 @@ namespace ImageServiceWeb.Controllers
         public ActionResult DeleteHandler()
         {
             return View();
+        }
+
+        [HttpGet]
+        public ActionResult Logs()
+        {
+            return View(logsModel);
         }
     }
 }
