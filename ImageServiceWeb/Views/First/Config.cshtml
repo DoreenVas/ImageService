@@ -43,7 +43,7 @@
         @foreach (string handler in Model.Handlers)
         {
         <tr>
-            <td> @Html.ActionLink(@handler, "DeleteHandler")</td>
+            <td> @Html.ActionLink(@handler, "SaveHandler", new { handlerToDelete = handler})</td>
         </tr>
         }
     </table>

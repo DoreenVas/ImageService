@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 
@@ -11,11 +12,13 @@ namespace ImageServiceWeb.Controllers
     {
         static ConfigModel configModel = new ConfigModel();
         static LogsModel logsModel = new LogsModel();
+        static MainModel mainModel = new MainModel();
+        private static string handlerDelete;
 
         // GET: First
         public ActionResult Index()
         {
-            return View();
+            return View(mainModel);
         }
 
         [HttpGet]
@@ -35,5 +38,22 @@ namespace ImageServiceWeb.Controllers
         {
             return View(logsModel);
         }
+
+        public ActionResult SaveHandler(string handlerToDelete)
+        {
+            handlerDelete = handlerToDelete;
+            return RedirectToAction("DeleteHandler");
+        }
+
+        public ActionResult OKClicked()
+        {
+            configModel.DeleteHandler(handlerDelete);
+            while (configModel.Handlers.Contains(handlerDelete))
+            {
+                Thread.Sleep(1000);
+            }
+            return RedirectToAction("Config");
+        }
+
     }
 }

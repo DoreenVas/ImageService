@@ -79,6 +79,5 @@ namespace ImageServiceWeb.Models
         [DataType(DataType.Text)]
         [Display(Name = "Logs")]
         public List<MessageRecievedEventArgs> Logs { get; set; }
-
     }
 }

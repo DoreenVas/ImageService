@@ -86,6 +86,14 @@ namespace ImageServiceWeb.Models
             }
         }
 
+        public void DeleteHandler(string handler)
+        {
+            string[] arr = new string[1];
+            arr[0] = handler;
+            CommandRecievedEventArgs command = new CommandRecievedEventArgs((int)CommandEnum.CloseCommand, arr, handler);
+            Client.SendCommand(command);
+        }
+
         [Required]
         [DataType(DataType.Text)]
         [Display(Name = "OutputDir")]
