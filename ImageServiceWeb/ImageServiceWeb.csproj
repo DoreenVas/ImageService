@@ -114,6 +114,8 @@
     </Compile>
     <Compile Include="Models\ConfigModel.cs" />
     <Compile Include="Models\LogsModel.cs" />
+    <Compile Include="Models\PhotoPresenterModel.cs" />
+    <Compile Include="Models\PhotosModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -128,6 +130,7 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\First\DeleteHandler.cshtml" />
     <Content Include="Views\First\Logs.cshtml" />
+    <Content Include="Views\First\Photos.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

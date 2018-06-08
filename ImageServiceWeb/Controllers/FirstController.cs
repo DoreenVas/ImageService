@@ -11,6 +11,7 @@ namespace ImageServiceWeb.Controllers
     {
         static ConfigModel configModel = new ConfigModel();
         static LogsModel logsModel = new LogsModel();
+        static PhotosModel photosModel = new PhotosModel();
 
         // GET: First
         public ActionResult Index()
@@ -34,6 +35,12 @@ namespace ImageServiceWeb.Controllers
         public ActionResult Logs()
         {
             return View(logsModel);
+        }
+
+        [HttpGet]
+        public ActionResult Photos()
+        {
+            return View(photosModel);
         }
     }
 }

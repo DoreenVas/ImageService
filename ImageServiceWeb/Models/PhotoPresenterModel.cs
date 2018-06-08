@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace ImageServiceWeb.Controllers
+namespace ImageServiceWeb.Models
 {
-    public class PhotosController
+    public class PhotoPresenterModel
     {
     }
 }
