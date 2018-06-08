@@ -10,6 +10,7 @@ namespace ImageServiceWeb.Controllers
     public class FirstController : Controller
     {
         static ConfigModel configModel = new ConfigModel();
+        static PhotosModel photosModel = new PhotosModel();
         // GET: First
         public ActionResult Index()
         {
@@ -26,6 +27,12 @@ namespace ImageServiceWeb.Controllers
         public ActionResult DeleteHandler()
         {
             return View();
+        }
+
+        [HttpGet]
+        public ActionResult Image()
+        {
+            return View(photosModel);
         }
     }
 }
