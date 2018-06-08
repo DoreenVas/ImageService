@@ -121,6 +121,8 @@
     <Compile Include="Models\LogsModel.cs" />
     <Compile Include="Models\MainModel.cs" />
     <Compile Include="Models\Student.cs" />
+    <Compile Include="Models\PhotoPresenterModel.cs" />
+    <Compile Include="Models\PhotosModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -134,6 +136,7 @@
     <Content Include="Views\First\Index.cshtml" />
     <Content Include="Views\First\DeleteHandler.cshtml" />
     <Content Include="Views\First\Logs.cshtml" />
+    <Content Include="Views\First\Photos.cshtml" />
     <Content Include="Scripts\jquery-3.0.0.slim.min.map" />
     <Content Include="Scripts\jquery-3.0.0.min.map" />
     <None Include="Web.Debug.config">

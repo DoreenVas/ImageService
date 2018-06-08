@@ -12,6 +12,7 @@ namespace ImageServiceWeb.Controllers
     {
         static ConfigModel configModel = new ConfigModel();
         static LogsModel logsModel = new LogsModel();
+        static PhotosModel photosModel = new PhotosModel();
         static MainModel mainModel = new MainModel();
         private static string handlerDelete;
 
@@ -55,5 +56,11 @@ namespace ImageServiceWeb.Controllers
             return RedirectToAction("Config");
         }
 
+
+        [HttpGet]
+        public ActionResult Photos()
+        {
+            return View(photosModel);
+        }
     }
 }
