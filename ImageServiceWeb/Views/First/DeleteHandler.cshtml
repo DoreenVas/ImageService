@@ -1,7 +1,23 @@
-﻿
+﻿@model ImageServiceWeb.Models.ConfigModel
+
 @{
     ViewBag.Title = "DeleteHandler";
 }
 
 <h2>DeleteHandler</h2>
+<div>Are you sure you would like to close the handler?</div>
+<button type="button" id="btnOK" style="margin:10px">OK</button>
+<button type="button" id="btnCancel" style="margin:10px">CANCEL</button>
+
+<script>
+    $("#btnOK").click(function () {
+    
+    });
+
+    $("#btnCancel").click(function () {
+        //window.location.href = "Config";
+        window.location.href = 'Config'
+    });
+
+</script>
 
