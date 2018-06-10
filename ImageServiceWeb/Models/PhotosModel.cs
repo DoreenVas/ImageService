@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.IO;
 using System.Linq;
 using System.Web;
 
@@ -8,19 +10,49 @@ namespace ImageServiceWeb.Models
     public class PhotosModel
     {
 
+        private string name;
+        private string relativePath;
+        //private string fullPath;
+        private string thumbRelativePath;
+        //private string thumbFullPath;
+        private string year;
+        private string month;
+
+        public PhotosModel(string photoName, string photoRelativePath, string thumbnailRelativePath,
+            string photoYear, string photoMonth)
+        {
+            name = photoName;
+            relativePath = photoRelativePath;
+            thumbRelativePath = thumbnailRelativePath;
+            //fullPath = photofullPath; // todo: maybe remove abs paths
+            //thumbFullPath = thumbnailFullPath;
+            year = photoYear;
+            month = photoMonth;
+        }
+
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "Name")]
+        public string Name { get => name; set => name = value; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "RelativePath")]
+        public string RelativePath { get => relativePath; set => relativePath = value; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "RelativeThumbnailPath")]
+        public string RelativeThumbnailPath { get => thumbRelativePath; set => thumbRelativePath = value; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "Year")]
+        public string Year { get => year; set => year = value; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "Month")]
+        public string Month { get => month; set => month = value; }
     }
-    // todo: photosView.
-    //@foreach(var photoItem in Model)
-    //{
-    //< div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-        //<div class="thumbnail">
-            //<img src = "@Url.Content(photoItem.ImageRelativePath)" alt="" class="img-circle" width="242" height="200">
-            //<div class="caption">
-                //<h4>@photoItem.</h4>
-                //<p>year: @photoItem.Year Month:@photoItem.Month</p>
-                //<p><a href = "@Url.Action("PhotoPresenter", new { photoRelativePath = photoItem.ImageRelativePath})" id="btnView" class="btn btn-info btn-xs" role="button">View</a> <a href = "@Url.Action("DeletetionWarning", new { photoRelativePath = photoItem.ImageRelativePath})" id="btnDelete" class="btn btn-danger btn-xs" role="button">Delete</a></p>
-            //</div>
-        //</div>
-    //</div>
-    //}
 }

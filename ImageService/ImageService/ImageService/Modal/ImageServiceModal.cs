@@ -55,7 +55,7 @@ namespace ImageService.Modal
 
                     // create target directory and make it hidden
                     DirectoryInfo directoryInfo = Directory.CreateDirectory(m_OutputFolder);
-                    new FileInfo(m_OutputFolder).Attributes = new FileInfo(m_OutputFolder).Attributes | FileAttributes.Hidden;
+                    //new FileInfo(m_OutputFolder).Attributes = new FileInfo(m_OutputFolder).Attributes | FileAttributes.Hidden;
 
                     //create the path strings for the output folder and thumbnail
                     string outputFolder = m_OutputFolder + "\\" + year + "\\" + month;

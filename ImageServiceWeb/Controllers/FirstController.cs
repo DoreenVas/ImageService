@@ -12,7 +12,8 @@ namespace ImageServiceWeb.Controllers
     {
         static ConfigModel configModel = new ConfigModel();
         static LogsModel logsModel = new LogsModel();
-        static PhotosModel photosModel = new PhotosModel();
+        
+        static PhotosCollectionModel photosCollectionModel = new PhotosCollectionModel("C:\\Users\\ophirbh\\source\\repos\\ImageService\\ImageServiceWeb\\to");
         static MainModel mainModel = new MainModel();
         private static string handlerDelete;
 
@@ -57,10 +58,9 @@ namespace ImageServiceWeb.Controllers
         }
 
 
-        [HttpGet]
         public ActionResult Photos()
         {
-            return View(photosModel);
+            return View(photosCollectionModel);
         }
     }
 }
