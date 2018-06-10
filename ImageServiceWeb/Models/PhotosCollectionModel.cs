@@ -16,7 +16,7 @@ namespace ImageServiceWeb.Models
         [Display(Name = "PhotosCollection")]
         public List<PhotosModel> Photos { get => photosCollection; set => photosCollection = value; }
 
-        public PhotosCollectionModel(string outputDirPath)
+        public void GetPhotosCollection(string outputDirPath)
         {
             if (outputDirPath == null)
             {
@@ -39,13 +39,16 @@ namespace ImageServiceWeb.Models
                         {
                             string yearStr = yearDirectory.Name;
                             string monthStr = monthDirectory.Name;
-                            string relPath = yearDirectory.Parent.Name + backSlashToken + yearStr + backSlashToken +
+                            string relPath = backSlashToken + yearDirectory.Parent.Name + backSlashToken + yearStr + backSlashToken +
                                 monthStr + backSlashToken + photo.Name;
                             string thumbRelPath = backSlashToken + yearDirectory.Parent.Name + thumbnailsToken + backSlashToken + yearStr + backSlashToken +
                                 monthStr + backSlashToken + photo.Name;
+                            string fullPath = outputDirPath + backSlashToken + yearStr + backSlashToken + monthStr +
+                                backSlashToken + photo.Name;
+                            string thumbFullPath = outputDirPath + thumbnailsToken + backSlashToken + yearStr + backSlashToken +
+                                monthStr + backSlashToken + photo.Name;
 
-
-                            photosCollection.Add(new PhotosModel(photo.Name, relPath, thumbRelPath, yearStr, monthStr));
+                            photosCollection.Add(new PhotosModel(photo.Name, relPath, thumbRelPath, fullPath, thumbFullPath, yearStr, monthStr));
                         }
                     }
                 }
