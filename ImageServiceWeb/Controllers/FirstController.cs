@@ -13,7 +13,7 @@ namespace ImageServiceWeb.Controllers
         static ConfigModel configModel = new ConfigModel();
         static LogsModel logsModel = new LogsModel();
         
-        static PhotosCollectionModel photosCollectionModel = new PhotosCollectionModel("C:\\Users\\ophirbh\\source\\repos\\ImageService\\ImageServiceWeb\\to");
+        static PhotosCollectionModel photosCollectionModel = new PhotosCollectionModel("C:\\Users\\Doreen\\source\\repos\\ImageService\\ImageServiceWeb\\to");
         static MainModel mainModel = new MainModel();
         private static string handlerDelete;
 
