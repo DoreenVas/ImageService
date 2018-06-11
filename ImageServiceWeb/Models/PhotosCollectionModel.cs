@@ -14,10 +14,9 @@ namespace ImageServiceWeb.Models
     {
         const string backSlashToken = "/";
         const string thumbnailsToken = "/Thumbnails";
-        private List<PhotosModel> photosCollection = new List<PhotosModel>();
 
         [Display(Name = "PhotosCollection")]
-        public List<PhotosModel> Photos { get => photosCollection; set => photosCollection = value; }
+        public List<PhotosModel> Photos { get; set; } = new List<PhotosModel>();
 
         /// <summary>
         /// Get the photo collection located in the argument output directory.
@@ -30,7 +29,7 @@ namespace ImageServiceWeb.Models
                 return;
             }
 
-            photosCollection.Clear();
+            Photos.Clear();
             DirectoryInfo directory = new DirectoryInfo(outputDirPath);
             List<DirectoryInfo> directoriesByYears = directory.GetDirectories().ToList();
             foreach (DirectoryInfo yearDirectory in directoriesByYears)
@@ -55,7 +54,7 @@ namespace ImageServiceWeb.Models
                             string thumbFullPath = outputDirPath + thumbnailsToken + backSlashToken + yearStr + backSlashToken +
                                 monthStr + backSlashToken + photo.Name;
 
-                            photosCollection.Add(new PhotosModel(photo.Name, relPath, thumbRelPath, fullPath, thumbFullPath, yearStr, monthStr));
+                            Photos.Add(new PhotosModel(photo.Name, relPath, thumbRelPath, fullPath, thumbFullPath, yearStr, monthStr));
                         }
                     }
                 }

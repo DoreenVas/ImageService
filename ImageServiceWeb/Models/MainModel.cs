@@ -31,7 +31,11 @@ namespace ImageServiceWeb.Models
         public bool Connected { get; set; }
 
         [Required]
-        [Display(Name = "Connected")]
+        [Display(Name = "PhotoNumber")]
+        public int PhotoNumber { get; set; }
+
+        [Required]
+        [Display(Name = "Students")]
         public List<Student> Students { get; set; }
 
 

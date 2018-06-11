@@ -12,14 +12,26 @@ namespace ImageServiceWeb.Controllers
     {
         static ConfigModel configModel = new ConfigModel();
         static LogsModel logsModel = new LogsModel();
-        
         static PhotosCollectionModel photosCollectionModel = new PhotosCollectionModel();
         static MainModel mainModel = new MainModel();
         private static string handlerDelete;
 
+        public FirstController()
+        {
+            if (mainModel.Connected == true)
+            {
+                while (configModel.OutputDir == null)
+                {
+                    Thread.Sleep(1000);
+                }
+                string outputDirPath = configModel.OutputDir;
+                photosCollectionModel.GetPhotosCollection(outputDirPath);
+            }
+        }
         // GET: First
         public ActionResult Index()
         {
+            mainModel.PhotoNumber = photosCollectionModel.Photos.Count;
             return View(mainModel);
         }
 
@@ -63,7 +75,6 @@ namespace ImageServiceWeb.Controllers
         /// <returns>The view of the photos.</returns>
         public ActionResult Photos()
         {
-            photosCollectionModel.GetPhotosCollection("C:\\Users\\ophirbh\\source\\repos\\ImageService\\ImageServiceWeb\\to");
             return View(photosCollectionModel);
         }
 
@@ -123,4 +134,5 @@ namespace ImageServiceWeb.Controllers
             return null;
         }
     }
+
 }

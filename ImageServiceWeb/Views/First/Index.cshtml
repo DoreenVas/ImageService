@@ -5,10 +5,9 @@
 }
 
 <h2>Index</h2>
-<table>
+<table class="table" style="width:auto">
     <tr>
         <td>The server is:</td>
-
         @{string answer = "";
             var reply = Model.Connected.ToString().ToLower();
             switch (reply)
@@ -23,9 +22,13 @@
         }
         <td>@answer</td>
     </tr>
+    <tr>
+        <td>Number of photos:</td>
+        <td>@Model.PhotoNumber</td>
+    </tr>
 </table>
 <hr />
-<table>
+<table class="table" style="width:auto">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Students[0].First)
