@@ -87,6 +87,10 @@ namespace ImageServiceWeb.Models
             }
         }
 
+        /// <summary>
+        /// Sends the server CloseCommand to close the given handler.
+        /// </summary>
+        /// <param name="handler">handler to delete</param>
         public void DeleteHandler(string handler)
         {
             string[] arr = new string[1];
@@ -95,6 +99,7 @@ namespace ImageServiceWeb.Models
             Client.SendCommand(command);
         }
 
+        //Properties.
         [Required]
         [DataType(DataType.Text)]
         [Display(Name = "OutputDir")]

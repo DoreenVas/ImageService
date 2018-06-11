@@ -16,6 +16,9 @@ namespace ImageServiceWeb.Controllers
         static MainModel mainModel = new MainModel();
         private static string handlerDelete;
 
+        /// <summary>
+        /// constructor. waits for the OutputDir then calls the GetPhotosCollection method. 
+        /// </summary>
         public FirstController()
         {
             if (mainModel.Connected == true)
@@ -29,36 +32,61 @@ namespace ImageServiceWeb.Controllers
             }
         }
         // GET: First
+        /// <summary>
+        /// sets the property PhotoNumber to the number of photos in the Photos list.
+        /// </summary>
+        /// <returns>the Index View with mainModel.</returns>
         public ActionResult Index()
         {
             mainModel.PhotoNumber = photosCollectionModel.Photos.Count;
             return View(mainModel);
         }
 
+        /// <summary>
+        /// Config page constractor.
+        /// </summary>
+        /// <returns>the Config View with configModel.</returns>
         [HttpGet]
         public ActionResult Config()
         {
             return View(configModel);
         }
 
+        /// <summary>
+        /// DeleteHandler page constractor.
+        /// </summary>
+        /// <returns>the View.</returns>
         [HttpGet]
         public ActionResult DeleteHandler()
         {
             return View();
         }
 
+        /// <summary>
+        /// Logs page constractor.
+        /// </summary>
+        /// <returns>the Logs View with logsModel.</returns>
         [HttpGet]
         public ActionResult Logs()
         {
             return View(logsModel);
         }
 
+        /// <summary>
+        /// The method gets a handler(that was clicked on in the view) and sets the handlerDelete field to equal it.
+        /// </summary>
+        /// <param name="handlerToDelete"></param>
+        /// <returns>redirects to DeleteHandler page</returns>
         public ActionResult SaveHandler(string handlerToDelete)
         {
             handlerDelete = handlerToDelete;
             return RedirectToAction("DeleteHandler");
         }
 
+        /// <summary>
+        /// The method activates the DeleteHandler method in configModel and waits until deletion.
+        /// </summary>
+        /// <returns>Redirects to Config page</returns>
         public ActionResult OKClicked()
         {
             configModel.DeleteHandler(handlerDelete);

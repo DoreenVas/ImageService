@@ -38,7 +38,10 @@ namespace ImageServiceWeb.Models
         [Display(Name = "Students")]
         public List<Student> Students { get; set; }
 
-
+        /// <summary>
+        /// Reads the Details of the students, create Student object for 
+        /// each one and adds it to the Students list.  
+        /// </summary>
         private void MakeStudentsList()
         {
             try

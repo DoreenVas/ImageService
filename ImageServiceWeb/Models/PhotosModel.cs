@@ -43,6 +43,7 @@ namespace ImageServiceWeb.Models
             month = photoMonth;
         }
 
+        //Properties.
         [Required]
         [DataType(DataType.Text)]
         [Display(Name = "Name")]
