@@ -13,7 +13,7 @@ namespace ImageServiceWeb.Controllers
         static ConfigModel configModel = new ConfigModel();
         static LogsModel logsModel = new LogsModel();
         
-        static PhotosCollectionModel photosCollectionModel = new PhotosCollectionModel("C:\\Users\\Doreen\\source\\repos\\ImageService\\ImageServiceWeb\\to");
+        static PhotosCollectionModel photosCollectionModel = new PhotosCollectionModel();
         static MainModel mainModel = new MainModel();
         private static string handlerDelete;
 
@@ -60,7 +60,46 @@ namespace ImageServiceWeb.Controllers
 
         public ActionResult Photos()
         {
+            photosCollectionModel.GetPhotosCollection("C:\\Users\\ophirbh\\source\\repos\\ImageService\\ImageServiceWeb\\to");
             return View(photosCollectionModel);
+        }
+
+        public ActionResult PhotoPresenter(string photoRelPath)
+        {
+            foreach (PhotosModel photo in photosCollectionModel.Photos)
+            {
+                if (photo.RelativePath == photoRelPath)
+                {
+                    return View(photo);
+                }
+            }
+            return null;
+        }
+
+        public ActionResult DeletePhoto(string ThumbPhotoRelPath)
+        {
+            foreach (PhotosModel photo in photosCollectionModel.Photos)
+            {
+                if (photo.RelativeThumbnailPath == ThumbPhotoRelPath)
+                {
+                    return View(photo);
+                }
+            }
+            return null;
+        }
+
+        public ActionResult PhotoDeletionConfirmed(string thumbPhotoRelPath)
+        {
+            foreach (PhotosModel photo in photosCollectionModel.Photos)
+            {
+                if (photo.RelativeThumbnailPath == thumbPhotoRelPath)
+                {
+                    System.IO.File.Delete(photo.FullPath);
+                    System.IO.File.Delete(photo.ThumbFullPath);
+                    return RedirectToAction("Photos");
+                }
+            }
+            return null;
         }
     }
 }

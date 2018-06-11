@@ -12,20 +12,20 @@ namespace ImageServiceWeb.Models
 
         private string name;
         private string relativePath;
-        //private string fullPath;
+        private string fullPath;
         private string thumbRelativePath;
-        //private string thumbFullPath;
+        private string thumbFullPath;
         private string year;
         private string month;
 
         public PhotosModel(string photoName, string photoRelativePath, string thumbnailRelativePath,
-            string photoYear, string photoMonth)
+            string photofullPath, string thumbnailFullPath, string photoYear, string photoMonth)
         {
             name = photoName;
             relativePath = photoRelativePath;
             thumbRelativePath = thumbnailRelativePath;
-            //fullPath = photofullPath; // todo: maybe remove abs paths
-            //thumbFullPath = thumbnailFullPath;
+            fullPath = photofullPath; // todo: maybe remove abs paths
+            thumbFullPath = thumbnailFullPath;
             year = photoYear;
             month = photoMonth;
         }
@@ -44,6 +44,16 @@ namespace ImageServiceWeb.Models
         [DataType(DataType.Text)]
         [Display(Name = "RelativeThumbnailPath")]
         public string RelativeThumbnailPath { get => thumbRelativePath; set => thumbRelativePath = value; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "FullPath")]
+        public string FullPath { get => fullPath; set => fullPath = value; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "ThumbFullPath")]
+        public string ThumbFullPath { get => thumbFullPath; set => thumbFullPath = value; }
 
         [Required]
         [DataType(DataType.Text)]

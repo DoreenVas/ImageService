@@ -146,6 +146,8 @@
     <Content Include="Views\First\Photos.cshtml" />
     <Content Include="Scripts\jquery-3.0.0.slim.min.map" />
     <Content Include="Scripts\jquery-3.0.0.min.map" />
+    <Content Include="Views\First\PhotoPresenter.cshtml" />
+    <Content Include="Views\First\DeletePhoto.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
