@@ -57,13 +57,21 @@ namespace ImageServiceWeb.Controllers
             return RedirectToAction("Config");
         }
 
-
+        /// <summary>
+        /// Gets the photo collection and shows the photos.
+        /// </summary>
+        /// <returns>The view of the photos.</returns>
         public ActionResult Photos()
         {
             photosCollectionModel.GetPhotosCollection("C:\\Users\\ophirbh\\source\\repos\\ImageService\\ImageServiceWeb\\to");
             return View(photosCollectionModel);
         }
 
+        /// <summary>
+        /// Gets a relative path to a photo (Relative to project directory) and shows the photo.
+        /// </summary>
+        /// <param name="photoRelPath">The relative path to the photo. (Relative to project directory).</param>
+        /// <returns>The view of the photo.</returns>
         public ActionResult PhotoPresenter(string photoRelPath)
         {
             foreach (PhotosModel photo in photosCollectionModel.Photos)
@@ -76,6 +84,12 @@ namespace ImageServiceWeb.Controllers
             return null;
         }
 
+        /// <summary>
+        /// Gets a The thumbnail relative path of a photo (Relative to project directory),
+        /// and returns the deletion confirmation view of the photo.
+        /// </summary>
+        /// <param name="ThumbPhotoRelPath"></param>
+        /// <returns>The deletion confirmation view of the photo.</returns>
         public ActionResult DeletePhoto(string ThumbPhotoRelPath)
         {
             foreach (PhotosModel photo in photosCollectionModel.Photos)
@@ -88,6 +102,13 @@ namespace ImageServiceWeb.Controllers
             return null;
         }
 
+        /// <summary>
+        /// Gets a The thumbnail relative path of a photo (Relative to project directory),
+        /// deletes that photo from the photo collection, and returns to the photos view.
+        /// </summary>
+        /// <param name="thumbPhotoRelPath">The thumbnail relative path (Relative to project directory) of the photo
+        /// to be deleted.</param>
+        /// <returns>The photos view.</returns>
         public ActionResult PhotoDeletionConfirmed(string thumbPhotoRelPath)
         {
             foreach (PhotosModel photo in photosCollectionModel.Photos)

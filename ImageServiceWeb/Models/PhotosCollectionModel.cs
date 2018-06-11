@@ -7,6 +7,9 @@ using System.Web;
 
 namespace ImageServiceWeb.Models
 {
+    /// <summary>
+    /// Represents a photo collection.
+    /// </summary>
     public class PhotosCollectionModel
     {
         const string backSlashToken = "/";
@@ -16,6 +19,10 @@ namespace ImageServiceWeb.Models
         [Display(Name = "PhotosCollection")]
         public List<PhotosModel> Photos { get => photosCollection; set => photosCollection = value; }
 
+        /// <summary>
+        /// Get the photo collection located in the argument output directory.
+        /// </summary>
+        /// <param name="outputDirPath"> The output directory that contains the photos of our collection.</param>
         public void GetPhotosCollection(string outputDirPath)
         {
             if (outputDirPath == null)

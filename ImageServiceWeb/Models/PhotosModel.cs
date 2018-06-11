@@ -7,6 +7,9 @@ using System.Web;
 
 namespace ImageServiceWeb.Models
 {
+    /// <summary>
+    /// Represents a single photo.
+    /// </summary>
     public class PhotosModel
     {
 
@@ -18,6 +21,16 @@ namespace ImageServiceWeb.Models
         private string year;
         private string month;
 
+        /// <summary>
+        /// Ctor. gets arguments and creates a new photoModel object.
+        /// </summary>
+        /// <param name="photoName">The photo's name.</param>
+        /// <param name="photoRelativePath">The photo's relative path (Relative to project directory).</param>
+        /// <param name="thumbnailRelativePath">The thumbnail photo's relative path (Relative to project directory).</param>
+        /// <param name="photofullPath">The photo's full path.</param>
+        /// <param name="thumbnailFullPath">The thumbnail photo's full path.</param>
+        /// <param name="photoYear">The year the photo was taken.</param>
+        /// <param name="photoMonth">The month the photo was taken.</param>
         public PhotosModel(string photoName, string photoRelativePath, string thumbnailRelativePath,
             string photofullPath, string thumbnailFullPath, string photoYear, string photoMonth)
         {
