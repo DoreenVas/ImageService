@@ -24,7 +24,7 @@ namespace ImageServiceWeb.Models
             name = photoName;
             relativePath = photoRelativePath;
             thumbRelativePath = thumbnailRelativePath;
-            fullPath = photofullPath; // todo: maybe remove abs paths
+            fullPath = photofullPath; 
             thumbFullPath = thumbnailFullPath;
             year = photoYear;
             month = photoMonth;

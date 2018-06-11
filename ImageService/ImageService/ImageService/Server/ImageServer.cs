@@ -172,7 +172,7 @@ namespace ImageService.Server
                     {
                         clients.Remove(client);
                         client.Close();
-                        m_logging.Log(exc.ToString(), MessageTypeEnum.FAIL);
+                        //m_logging.Log(exc.ToString(), MessageTypeEnum.FAIL);
                     }
                 }).Start();
         }

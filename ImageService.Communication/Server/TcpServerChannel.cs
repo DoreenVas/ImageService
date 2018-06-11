@@ -112,6 +112,7 @@ namespace ImageService.Communication.Server
                         catch (Exception)
                         {            
                             tcpClients.Remove(tcpClient);
+                            tcpClient.Close();
                         }
                     }).Start();
                 }

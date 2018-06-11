@@ -128,7 +128,6 @@
     <Compile Include="Models\MainModel.cs" />
     <Compile Include="Models\PhotosCollectionModel.cs" />
     <Compile Include="Models\Student.cs" />
-    <Compile Include="Models\PhotoPresenterModel.cs" />
     <Compile Include="Models\PhotosModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
