@@ -48,7 +48,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Server\IClientHandler.cs" />
     <Compile Include="Server\IServerCommunicationChannel.cs" />
-    <Compile Include="Server\TcpPhotoChannel.cs" />
     <Compile Include="Server\TcpServerChannel.cs" />
   </ItemGroup>
   <ItemGroup>

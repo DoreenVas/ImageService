@@ -19,6 +19,7 @@ using ImageService.Communication.Server;
 using ImageService.Infrastructure.Enums;
 using Newtonsoft.Json;
 using System.Threading;
+using ImageService.ClientHandler;
 
 namespace ImageService
 {   
@@ -33,6 +34,7 @@ namespace ImageService
         private IImageController controller;
         private ILoggingService logging;
         private IServerCommunicationChannel serverChannel;
+        private IClientHandler clientHandler;
 
         [DllImport("advapi32.dll", SetLastError = true)]
         private static extern bool SetServiceStatus(IntPtr handle, ref ServiceStatus serviceStatus);
@@ -87,9 +89,9 @@ namespace ImageService
             modal = new ImageServiceModal(outputDir, int.Parse(thumbnailSize));
             controller = new ImageController(modal,logging);
             imageServer = new ImageServer(controller, logging, handler);
-            serverChannel = new TcpServerChannel(8000, logging, imageServer);
-            imageServer.NotifyClients += serverChannel.NotifyClients;
-
+            clientHandler = new HandleGuiClient(controller, logging, imageServer);
+            serverChannel = new TcpServerChannel(8000, logging, clientHandler);
+            clientHandler.NotifyClients += serverChannel.NotifyClients;
         }
 
         /// <summary>
