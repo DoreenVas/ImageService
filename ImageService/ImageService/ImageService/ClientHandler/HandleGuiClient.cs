@@ -19,7 +19,6 @@ namespace ImageService.ClientHandler
 {
     class HandleGuiClient: IClientHandler
     {
-        public event EventHandler<CommandRecievedEventArgs> CommandRecieved;
         public event NotifyClients NotifyClients;
 
         private IImageController m_controller;
@@ -67,7 +66,7 @@ namespace ImageService.ClientHandler
                         }
                         else if (commandRecievedEventArgs.CommandID == (int)CommandEnum.CloseCommand)
                         {
-                            CommandRecieved?.Invoke(this, commandRecievedEventArgs);
+                            m_imageServer.makeEvent(commandRecievedEventArgs);
                             if (m_imageServer.Handlers.Contains(commandRecievedEventArgs.RequestDirPath))
                                 m_imageServer.Handlers.Remove(commandRecievedEventArgs.RequestDirPath);
                             Thread.Sleep(100);

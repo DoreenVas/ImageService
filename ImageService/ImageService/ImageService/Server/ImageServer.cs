@@ -27,7 +27,7 @@ namespace ImageService.Server
         private ILoggingService m_logging;
         private string m_handler;
         public List<string> Handlers;
-
+        
         public event EventHandler<CommandRecievedEventArgs> CommandRecieved; // The event that notifies about a new Command being recieved
 
         /// <summary>
@@ -89,6 +89,11 @@ namespace ImageService.Server
             CommandRecievedEventArgs e = new CommandRecievedEventArgs((int)CommandEnum.CloseCommand, args, "*");
             CommandRecieved?.Invoke(this, e);
             m_logging.Log("Server is Closing ", MessageTypeEnum.INFO);
+        }
+
+        public void makeEvent(CommandRecievedEventArgs commandRecievedEventArgs)
+        {
+            CommandRecieved?.Invoke(this, commandRecievedEventArgs);
         }
     }
 }
