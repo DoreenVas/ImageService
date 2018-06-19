@@ -40,7 +40,9 @@ namespace ImageService.ClientHandler
         }
 
         /// <summary>
-        /// Handles an android client.
+        /// Handles an android client. Reads an header size and an image size and according to them reads the 
+        /// header and the image itself in a loop until there are no more pictures.
+        /// Each picture is saved later with the header as its name in an handler for further proccessing. 
         /// </summary>
         /// <param name="client">The tcp client.</param>
         /// <param name="clients">A list of TCP clients.</param>

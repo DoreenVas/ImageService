@@ -50,7 +50,7 @@ namespace ImageService.ClientHandler
         }
 
         /// <summary>
-        /// Handles a GUI client.
+        /// Handles a GUI client. Reads commands, executes them and sends a command back if needed
         /// </summary>
         /// <param name="client">The GUI client.</param>
         /// <param name="clients">A list of GUI clients.</param>
