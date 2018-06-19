@@ -89,7 +89,8 @@ namespace ImageService
             modal = new ImageServiceModal(outputDir, int.Parse(thumbnailSize));
             controller = new ImageController(modal,logging);
             imageServer = new ImageServer(controller, logging, handler);
-            clientHandler = new HandleGuiClient(controller, logging, imageServer);
+            //clientHandler = new HandleGuiClient(controller, logging, imageServer);
+            clientHandler = new HandleAndroidClient(controller, logging, imageServer); 
             serverChannel = new TcpServerChannel(8000, logging, clientHandler);
             clientHandler.NotifyClients += serverChannel.NotifyClients;
         }

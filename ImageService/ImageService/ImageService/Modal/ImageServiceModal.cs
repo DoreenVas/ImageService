@@ -68,13 +68,16 @@ namespace ImageService.Modal
                     string finalPath = outputFolder + "\\" + Path.GetFileName(path);
                     string finalThumbnail = outputThumbnail + "\\" + Path.GetFileName(path);
                     //if a picture with the same name already exists we change the name
-                    if (File.Exists(finalPath))
+                    /*if (File.Exists(finalPath))
                     {
                         Tuple<string, int> tuple = ChangePicName(finalPath, outputFolder);
                         finalPath = tuple.Item1;
                         //change thumbnail accordingly to match
                         finalThumbnail= outputThumbnail + "\\" + Path.GetFileNameWithoutExtension(path) + " (" + tuple.Item2.ToString() + ")" +Path.GetExtension(path);
-                    }
+                    }*/
+                    
+                    if (File.Exists(finalPath))
+                        File.Delete(finalPath);
                     File.Move(path, finalPath);
                     
                     Image image = Image.FromFile(finalPath);
