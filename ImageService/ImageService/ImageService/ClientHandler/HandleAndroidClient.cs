@@ -14,6 +14,9 @@ using System.Threading.Tasks;
 
 namespace ImageService.ClientHandler
 {
+    /// <summary>
+    /// Represents a class that handles an android client.
+    /// </summary>
     class HandleAndroidClient : IClientHandler
     {
         public event NotifyClients NotifyClients;
@@ -23,6 +26,12 @@ namespace ImageService.ClientHandler
         private ImageServer m_imageServer;
         private const int c_sizeBytesCount = 4;
 
+        /// <summary>
+        /// Creates a new handler instance for an android client.
+        /// </summary>
+        /// <param name="imageController">The image controller.</param>
+        /// <param name="loggingService">The logging service.</param>
+        /// <param name="imageServer">The image server.</param>
         public HandleAndroidClient(IImageController imageController, ILoggingService loggingService, ImageServer imageServer)
         {
             m_controller = imageController;
@@ -30,7 +39,11 @@ namespace ImageService.ClientHandler
             m_imageServer = imageServer;
         }
 
-
+        /// <summary>
+        /// Handles an android client.
+        /// </summary>
+        /// <param name="client">The tcp client.</param>
+        /// <param name="clients">A list of TCP clients.</param>
         public void HandleClient(TcpClient client, List<TcpClient> clients)
         {
             new Task(() =>
@@ -101,6 +114,11 @@ namespace ImageService.ClientHandler
             }).Start();
         }
 
+        /// <summary>
+        /// Converts a byte array to integer.
+        /// </summary>
+        /// <param name="byteArray">The byte array.</param>
+        /// <returns>Integer value of the byte array.</returns>
         public static int ByteArrayToInt(byte[] byteArray)
         {
             if (BitConverter.IsLittleEndian)

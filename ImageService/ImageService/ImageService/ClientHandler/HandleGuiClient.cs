@@ -17,6 +17,9 @@ using System.Threading.Tasks;
 
 namespace ImageService.ClientHandler
 {
+    /// <summary>
+    /// Represents a GUI client.
+    /// </summary>
     class HandleGuiClient: IClientHandler
     {
         public event NotifyClients NotifyClients;
@@ -25,6 +28,12 @@ namespace ImageService.ClientHandler
         private ILoggingService m_logging;
         private ImageServer m_imageServer;
 
+        /// <summary>
+        /// Creates a new GUI client handler instance.
+        /// </summary>
+        /// <param name="imageController">An image controller.</param>
+        /// <param name="loggingService">A logging service.</param>
+        /// <param name="imageServer">An image server.</param>
         public HandleGuiClient(IImageController imageController, ILoggingService loggingService,ImageServer imageServer)
         {
             m_controller = imageController;
@@ -40,6 +49,11 @@ namespace ImageService.ClientHandler
             return writeLock;
         }
 
+        /// <summary>
+        /// Handles a GUI client.
+        /// </summary>
+        /// <param name="client">The GUI client.</param>
+        /// <param name="clients">A list of GUI clients.</param>
         public void HandleClient(TcpClient client, List<TcpClient> clients)
         {
             new Task(() =>
@@ -115,8 +129,8 @@ namespace ImageService.ClientHandler
         /// <summary>
         /// Activates NotifyClients event if a new log has arrived.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">The sender object.</param>
+        /// <param name="e">The recieved arguments.</param>
         private void NewLogCommand(object sender, MessageRecievedEventArgs e)
         {
             string jsonCommand = JsonConvert.SerializeObject(e);
